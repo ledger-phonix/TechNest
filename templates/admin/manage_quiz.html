@@ -1,0 +1,42 @@
+{% extends "admin/dashboard.html" %}
+
+{% block admin_content %}
+<div class="admin-card">
+    <div class="card-header">
+        <h3>Update Quiz of the Day</h3>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('admin.manage_quiz') }}" method="POST" class="admin-form">
+            <div class="input-block">
+                <label>Question</label>
+                <input type="text" name="question" value="{{ quiz.question if quiz else '' }}" placeholder="Enter question..." required>
+            </div>
+            
+            <div class="form-group-flex">
+                <div class="input-block flex-1"><label>Option A</label><input type="text" name="option_a" value="{{ quiz.option_a if quiz else '' }}" required></div>
+                <div class="input-block flex-1"><label>Option B</label><input type="text" name="option_b" value="{{ quiz.option_b if quiz else '' }}" required></div>
+            </div>
+            
+            <div class="form-group-flex">
+                <div class="input-block flex-1"><label>Option C</label><input type="text" name="option_c" value="{{ quiz.option_c if quiz else '' }}" required></div>
+                <div class="input-block flex-1"><label>Option D</label><input type="text" name="option_d" value="{{ quiz.option_d if quiz else '' }}" required></div>
+            </div>
+
+            <div class="form-group-flex align-items-end">
+                <div class="input-block flex-1">
+                    <label>Correct Answer</label>
+                    <select name="correct_option">
+                        <option value="A" {% if quiz and quiz.correct_option == 'A' %}selected{% endif %}>Option A</option>
+                        <option value="B" {% if quiz and quiz.correct_option == 'B' %}selected{% endif %}>Option B</option>
+                        <option value="C" {% if quiz and quiz.correct_option == 'C' %}selected{% endif %}>Option C</option>
+                        <option value="D" {% if quiz and quiz.correct_option == 'D' %}selected{% endif %}>Option D</option>
+                    </select>
+                </div>
+                <div class="button-block flex-1">
+                    <button type="submit" class="btn-primary-wide">Set Daily Quiz</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

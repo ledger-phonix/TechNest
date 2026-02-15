@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+
+{% block title %}Verify Email - TechNest{% endblock %}
+
+{% block content %}
+<main id="auth-page">
+    <section class="auth-container reveal">
+        <div class="auth-card">
+            <div class="auth-header">
+                 <div style="display: flex; justify-content: center; align-items: center; ">
+                    <img src="{{ url_for('static', filename='images/TechNest_favicon.png') }}" alt="TechNest Logo"
+                        style="max-width: 120px; height: auto; object-fit: contain;">
+                </div>
+                <h2>Verify Your Email</h2>
+                <p>We've sent a 6-digit code to your inbox. It expires in 5 minutes.</p>
+            </div>
+
+            <form action="{{ url_for('auth.verify_otp') }}" method="POST" id="otp-form">
+                
+                <div class="otp-input-container">
+                    <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                    <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                    <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                    <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                    <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                    <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                </div>
+
+                <input type="hidden" name="otp" id="full-otp">
+
+                <div class="timer-text">
+                    Code expires in: <span id="countdown">05:00</span>
+                </div>
+
+                <button type="submit" class="btn-main auth-btn">Verify & Create Account</button>
+                
+                <p class="auth-footer">
+                    Didn't receive code? 
+                    <a href="{{ url_for('auth.resend_otp') }}" class="resend-link" id="resend-btn">Resend Code</a>
+                </p>
+            </form>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

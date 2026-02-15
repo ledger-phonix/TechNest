@@ -1,0 +1,58 @@
+{% extends "main/base.html" %}
+
+{% block title %} Members{% endblock %}
+
+{% block content %}
+<div class="placeholder-container"> {% if members %}
+    <div class="biz-list-wrapper">
+        <div class="members-grid" id="members-grid-container">
+            {% include 'partials/_member_card.html' %}
+        </div>
+
+        <div class="biz-load-more-wrapper">
+            <button id="load-more-members-btn" class="biz-btn-load" data-offset="20" data-total="{{ total_count }}">
+                <i class="fas fa-spinner biz-spinner"></i>
+                <span class="btn-text">Load More Members</span>
+            </button>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmx3bjY5N3B4eWl1aGZkbHZ1cHBnaXVib2NpMGxlYWNxYjM3aDlpaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LOUgadO26P7JccVDZM/giphy.gif"
+                alt="Building TechNest" class="placeholder-gif">
+            <h2>Hatching Soon!</h2>
+            <p>Our <strong>Members</strong> directory is currently under construction or the database is taking a nap.
+            </p>
+            <a href="{{ url_for('home') }}" class="btn-main">Back to Home</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<style>
+    .placeholder-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .placeholder-gif {
+        max-width: 300px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .empty-state h2 {
+        color: #1a2a6c;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        color: #666;
+        margin-bottom: 30px;
+    }
+</style>
+{% endblock %}

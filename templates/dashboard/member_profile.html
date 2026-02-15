@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - {{ (member.first_name + ' ' + (member.second_name or ''))|title if role == 'individual' else member.company_name }}</title>
+     <link rel="shortcut icon" href="{{ url_for('static', filename='images/TechNest_favicon.png') }}"
+        type="image/x-icon" sizes="128x128">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --tech-blue: #0078d4; --bg-light: #f3f2f1; --border-color: #edebe9; }
+        body { background-color: var(--bg-light); padding-bottom: 50px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .profile-header {
+            background: white; padding: 40px 20px; text-align: center;
+            border-bottom: 1px solid var(--border-color); position: relative;
+        }
+
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            width: 40px; height: 40px; line-height: 40px;
+            background: #fff; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            color: #333; text-decoration: none; transition: 0.3s;
+        }
+        .back-btn:hover { background: var(--tech-blue); color: white; }
+
+        .profile-img {
+            width: 130px; height: 130px; border-radius: 50%;
+            object-fit: cover; border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 15px;
+        }
+
+        .detail-card {
+            background: white; border-radius: 12px; padding: 24px;
+            margin-top: 20px; border: 1px solid var(--border-color);
+        }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px; }
+        .stat-item { border-left: 3px solid var(--tech-blue); padding-left: 12px; }
+        .stat-label { font-size: 0.75rem; color: #605e5c;  display: block; }
+        .stat-value { font-weight: 600; color: #323130; display: block; }
+
+        .badge-skill {
+            background: #f3f2f1; color: #323130; border: 1px solid #8a8886;
+            padding: 6px 14px; border-radius: 4px; font-size: 0.85rem;
+            display: inline-block; margin: 4px; font-weight: 500;
+        }
+
+        .btn-link-profile {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; padding: 14px; border-radius: 8px;
+            text-decoration: none; font-weight: 600; margin-bottom: 12px; transition: 0.3s;
+        }
+        .btn-linkedin { background: #0077b5; color: white; }
+        .btn-portfolio { background: #323130; color: white; }
+        .btn-web { background: var(--tech-blue); color: white; }
+        .btn-maps { background: #107c10; color: white; }
+        .btn-phone { background: #edebe9; color: #323130; }
+        
+        .section-title { font-size: 0.9rem; font-weight: 700; color: #a19f9d; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            
+            <div class="profile-header rounded-top shadow-sm">
+                <a href="javascript:history.back()" class="back-btn text-center"><i class="fas fa-arrow-left"></i></a>
+                <img src="{{ member.profile_url }}" alt="Profile" class="profile-img">
+                <h3 class="mb-1 fw-bold">{{(member.first_name + ' ' + (member.second_name or ''))|title if role == 'individual' else member.company_name|title }}</h3>
+                <p class="text-muted mb-0">
+                    <i class="fas fa-map-marker-alt me-1 text-danger"></i> {{ member.city|title }}, Pakistan
+                </p>
+            </div>
+
+            <div class="detail-card shadow-sm">
+                <div class="stat-grid">
+                    {% if role == 'individual' %}
+                        <div class="stat-item">
+                            <span class="stat-label">Profession</span>
+                            <span class="stat-value">{{ member.profession_name or 'Member' }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Experience</span>
+                            <span class="stat-value">{{ member.experience }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Education</span>
+                            <span class="stat-value">{{ member.education }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Gender</span>
+                            <span class="stat-value">{{ member.gender }}</span>
+                        </div>
+                    {% else %}
+                        <!-- <div class="stat-item">
+                            <span class="stat-label">Industry</span>
+                            <span class="stat-value">{{ member.industry }}</span>
+                        </div> -->
+                        <div class="stat-item">
+                            <span class="stat-label">Established</span>
+                            <span class="stat-value">{{ member.established_year }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Employees</span>
+                            <span class="stat-value">{{ member.employee_range }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">CEO</span>
+                            <span class="stat-value">{{ member.owner_name }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="detail-card shadow-sm">
+                <h6 class="section-title">About</h6>
+                <p class="text-secondary" style="line-height: 1.6;">{{ member.tagline or member.about or 'No description provided.' }}</p>
+
+                {% if role == 'individual' and member.skills %}
+                    <h6 class="section-title mt-4">Skills</h6>
+                    <div class="d-flex flex-wrap">
+                        {% for skill in member.skills %}
+                            <span class="badge-skill"><i class="fas fa-check-circle me-1 text-primary"></i> {{ skill|title }}</span>
+                        {% endfor %}
+                    </div>
+                {% elif role == 'company' and member.services %}
+                    <h6 class="section-title mt-4">Services Offered</h6>
+                    <div class="d-flex flex-wrap">
+                        {% for service in member.services %}
+                            <span class="badge-skill"><i class="fas fa-briefcase me-1 text-primary"></i> {{ service.pro_name|title }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="detail-card shadow-sm">
+                <h6 class="section-title">Contact & Location</h6>
+                <p class="mb-3 d-flex align-items-center"><i class="far fa-envelope me-3 text-primary fs-5"></i> {{ member.email }}</p>
+                
+                {% if role == 'company' %}
+                    <p class="mb-3 d-flex align-items-center"><i class="fas fa-phone-alt me-3 text-success fs-5"></i> {{ member.contact_no}}</p>
+                    <p class="mb-0 d-flex align-items-center"><i class="fas fa-map-marked-alt me-3 text-warning fs-5"></i> {{ member.address }}</p>
+                {% endif %}
+            </div>
+
+            <div class="mt-4">
+                {% if role == 'individual' %}
+                    {% if member.linkedin_link %}
+                        <a href="{{ member.linkedin_link }}" target="_blank" class="btn-link-profile btn-linkedin">
+                            <i class="fab fa-linkedin"></i> LinkedIn Profile
+                        </a>
+                    {% endif %}
+                    {% if member.other_link %}
+                        <a href="{{ member.other_link }}" target="_blank" class="btn-link-profile btn-portfolio">
+                            <i class="fas fa-globe"></i> Portfolio / External Link
+                        </a>
+                    {% endif %}
+                {% else %}
+                    {% if member.web_url %}
+                        <a href="{{ member.web_url }}" target="_blank" class="btn-link-profile btn-web">
+                            <i class="fas fa-external-link-alt"></i> Visit Official Website
+                        </a>
+                    {% endif %}
+                     {% if member.linkedin_url %}
+                        <a href="{{ member.linkedin_url }}" target="_blank" class="btn-link-profile btn-web">
+                            <i class="fab fa-linkedin"></i> Visit LinkedIn
+                        </a>
+                    {% endif %}
+                    {% if member.google_map_url %}
+                        <a href="{{ member.google_map_url }}" target="_blank" class="btn-link-profile btn-maps">
+                            <i class="fas fa-directions"></i> Open in Google Maps
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

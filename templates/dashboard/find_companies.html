@@ -1,0 +1,79 @@
+{% extends "dashboard/layout.html" %}
+{% block title %}Matching - TechNest{% endblock %}
+{% block header_title %}Partner Companies{% endblock %}
+
+{% block header_subtitle %}
+<p class="text-muted small mb-0">Companies providing services in your field.</p>
+{% endblock %}
+{% block header_actions %}
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+
+    <div class="row">
+        {% if companies %}
+        {% for comp in companies %}
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-0 company-card" style="border-radius: 15px; background: #fff;">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <img src="{{ comp.logo_url }}" class="rounded shadow-sm" width="80" height="80"
+                            style="object-fit: contain; background: #f8f9fa; padding: 5px;"
+                            onerror="this.src='/static/default-logo.png'">
+                    </div>
+
+                    <h5 class="card-title mb-1 fw-bold text-dark">{{ comp.company_name }}</h5>
+                    <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill me-1"></i>{{ comp.city or 'N/A' }}</p>
+
+                    <div class="d-flex justify-content-center gap-2 mb-4">
+                        <span class="badge bg-soft-info text-info border-0 px-2 py-1"
+                            style="font-size: 0.7rem; background: #e0f7fa;">
+                            Est. {{ comp.established_year or 'N/A' }}
+                        </span>
+                        <span class="badge bg-soft-secondary text-secondary border-0 px-2 py-1"
+                            style="font-size: 0.7rem; background: #f5f5f5;">
+                            <i class="bi bi-people-fill me-1"></i>{{ comp.employee_range or 'N/A' }}
+                        </span>
+                    </div>
+
+                    <a href="{{ url_for('view_member_profile', role='company', member_id=comp.member_id) }}"
+                        class="btn btn-primary btn-sm w-100 shadow-sm" style="border-radius: 10px; font-weight: 500;">
+                        View Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center py-5">
+            <div class="p-5 bg-white rounded-4 shadow-sm mx-auto" style="max-width: 500px;">
+                <i class="bi bi-building-exclamation fs-1 text-secondary mb-3"></i>
+                <h5 class="fw-bold">No companies found</h5>
+                <p class="text-muted">We couldn't find companies offering services that match your profession yet.</p>
+                <a href="{{ url_for('dashboard.profile') }}" class="btn btn-outline-primary mt-2">Update My Profile</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .company-card {
+        transition: 0.3s ease;
+    }
+
+    .company-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+</style>
+
+<script>
+    document.body.style.overflow = "auto";
+    const compLink = document.querySelector('a[href*="find-companies"]');
+    if (compLink) {
+        compLink.classList.add('active');
+    }
+</script>
+{% endblock %}

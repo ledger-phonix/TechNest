@@ -1,0 +1,179 @@
+{% extends "dashboard/layout.html" %}
+{% block title %}Jobs Center - TechNest{% endblock %}
+{% block header_title %}Post a New Opportunity{% endblock %}
+
+{% block header_subtitle %}
+<p class="text-muted small mb-0">Fill in the details to reach top tech talent. Posts expire in 10 days.</p>
+{% endblock %}
+{% block header_actions %}
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid p-4">
+    <div class="row justify-content-center mb-5">
+        <div class="col-xl-10">
+            <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 15px;">
+                <div class="card-body p-4">
+                    <form action="{{ url_for('jobs.manage_jobs') }}" method="POST" class="row g-3">
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold small text-muted">JOB ROLE</label>
+                            <input type="text" name="job_role" class="form-control bg-light border-0"
+                                placeholder="e.g. Senior Frontend Engineer" required>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold small text-muted">JOB TYPE</label>
+                            <select name="job_type" class="form-select bg-light border-0" required>
+                                <option value="Full-time" selected>Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Internship">Internship</option>
+                                <option value="Remote">Remote</option>
+                                <option value="On-site">On-site</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-muted">EXTERNAL APPLICATION LINK</label>
+                            <input type="url" name="external_link" class="form-control bg-light border-0"
+                                placeholder="https://company.com/apply">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold small text-muted">JOB DESCRIPTION</label>
+                            <textarea name="job_description" class="form-control bg-light border-0" rows="3"
+                                placeholder="Describe the role, responsibilities, and perks..." required></textarea>
+                        </div>
+
+                        <div class="col-12 search-container">
+                            <label class="form-label fw-bold small text-muted">REQUIRED SKILLS</label>
+                            <div class="search-wrapper">
+                                <input type="text" id="skills-input" class="form-control bg-light border-0"
+                                    placeholder="Type skills (e.g. Python, React)..." autocomplete="off">
+                                <div id="skills-suggestions" class="suggestions-list"></div>
+                            </div>
+                            <input type="hidden" name="skills_list" id="selected-skills-data">
+                            <div id="skills-chips" class="chip-container mt-2"></div>
+                        </div>
+
+                        <div class="col-12 text-end pt-2">
+                            <button type="submit" class="btn btn-primary px-5 py-2 shadow-sm fw-bold" style="border-radius: 10px;">
+                                <i class="bi bi-rocket-takeoff me-2"></i>Launch Listing
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5 opacity-25">
+
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <h5 class="fw-bold mb-4"><i class="bi bi-list-task me-2 text-primary"></i>Your Active Listings</h5>
+
+            <div class="row g-4">
+                {% for job in jobs %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 position-relative" style="border-radius: 12px;">
+                        <div class="position-absolute top-0 end-0 mt-3 me-3">
+                            <span class="badge {% if job.days_left < 3 %}bg-danger animate-pulse{% else %}bg-primary{% endif %}"
+                                style="font-size: 0.7rem; border-radius: 50px;">
+                                {{ job.days_left }}d Left
+                            </span>
+                        </div>
+
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="mb-2">
+                                <span class="text-primary x-small fw-bold text-uppercase">
+                                    <i class="bi bi-tag-fill me-1"></i>{{ job.job_type }}
+                                </span>
+                            </div>
+                            
+                            <h6 class="fw-bold text-truncate pe-5 mb-1">{{ job.job_role }}</h6>
+                            <p class="text-muted x-small mb-3">Posted: {{ job.created_at.strftime('%b %d, %Y') }}</p>
+
+                            <p class="small text-muted mb-3"
+                                style="display: -webkit-box;  -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5;">
+                                {{ job.job_description }}
+                            </p>
+
+                            <div class="mb-3">
+                                {% if job.all_skills %}
+                                    {% for skill in job.all_skills.split(', ')[:3] %}
+                                    <span class="badge bg-primary-subtle text-primary border-0 x-small">{{ skill }}</span>
+                                    {% endfor %}
+                                    {% if job.all_skills.split(', ') | length > 3 %}
+                                    <span class="text-muted x-small">+{{ job.all_skills.split(', ') | length - 3 }}</span>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                <a href="{{ job.external_link }}" target="_blank"
+                                    class="btn btn-sm btn-link text-decoration-none p-0 x-small fw-bold">
+                                    <i class="bi bi-link-45deg"></i> View Link
+                                </a>
+                                
+                                <button type="button"
+                                    class="btn btn-sm text-danger p-0 border-0 bg-transparent x-small fw-bold"
+                                    data-bs-toggle="modal" data-bs-target="#deleteJobModal"
+                                    data-jobid="{{ job.job_id }}" data-jobrole="{{ job.job_role }}">
+                                    <i class="bi bi-trash3 me-1"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-12 text-center py-5 bg-white rounded-3 shadow-sm border">
+                    <i class="bi bi-clipboard-x fs-1 text-muted"></i>
+                    <p class="text-muted mt-2 mb-0">No active jobs found. Start by filling the form above!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteJobModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-4">
+                <div class="text-danger mb-3">
+                    <i class="bi bi-exclamation-octagon" style="font-size: 3rem;"></i>
+                </div>
+                <h5 class="fw-bold">Confirm Deletion</h5>
+                <p class="text-muted">Are you sure you want to remove the listing for <strong id="modalJobRole"></strong>?</p>
+            </div>
+            <div class="modal-footer border-0 justify-content-center pb-4">
+                <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteConfirmForm" method="POST" action="">
+                    <button type="submit" class="btn btn-danger px-4">Delete Permanently</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteModal = document.getElementById('deleteJobModal');
+        if (deleteModal) {
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const jobId = button.getAttribute('data-jobid');
+                const jobRole = button.getAttribute('data-jobrole');
+                const modalJobRole = deleteModal.querySelector('#modalJobRole');
+                const deleteForm = deleteModal.querySelector('#deleteConfirmForm');
+                modalJobRole.textContent = jobRole;
+                // Updated to match common pattern
+                deleteForm.action = `/dashboard/jobs/delete/${jobId}`;
+            });
+        }
+    });
+</script>
+{% endblock %}

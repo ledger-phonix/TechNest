@@ -1,0 +1,92 @@
+{% extends "admin/dashboard.html" %}
+
+{% block admin_content %}
+<div class="admin-card">
+    <div class="card-header d-flex-between">
+        <h3>Manage Individuals</h3>
+        <span class="badge-count">{{ users|length }} Total Users</span>
+    </div>
+    <div class="card-body">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Full Name</th>
+                    <th>Email Address</th>
+                    <th>Crated at</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td><code class="member-id-tag">#{{ user.member_id }}</code></td>
+                    <td>
+                        <strong>{{ user.first_name }} {{ user.second_name if user.second_name }}</strong>
+                    </td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {{ user.created_at.strftime('%d %b %Y') if user.created_at else 'N/A' }}
+                    </td>
+                    <td>
+                        <button class="btn-icon delete"
+                            onclick="confirmDelete('{{ user.user_id }}', '{{ user.first_name }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No individuals found in the database.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Confirm Deletion</h3>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete <strong id="deleteUserName"></strong>?</p>
+            <p class="warning-text">This will permanently remove their profile and authentication data.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+            <a id="confirmDeleteBtn" href="#" class="btn-danger">Delete Permanently</a>
+        </div>
+    </div>
+</div>
+<script>
+    function confirmDelete(userId, userName) {
+        const modal = document.getElementById('deleteModal');
+        const nameSpan = document.getElementById('deleteUserName');
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+        // Set the name in the popup
+        nameSpan.innerText = userName;
+
+        // Update the link to point to your delete route
+        confirmBtn.href = `/admin/delete-user/${userId}`;
+
+        // Show the modal
+        modal.style.display = 'flex';
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    // Close modal if user clicks outside of the white box
+    window.onclick = function (event) {
+        const modal = document.getElementById('deleteModal');
+        if (event.target == modal) {
+            closeDeleteModal();
+        }
+    }
+</script>
+{% endblock %}

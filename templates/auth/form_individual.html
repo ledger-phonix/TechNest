@@ -1,0 +1,173 @@
+{% extends "main/base.html" %}
+
+{% block title %}Complete Profile - TechNest{% endblock %}
+
+{% block content %}
+<main id="auth-page">
+    <section class="auth-container ">
+        <div class="auth-card profile-card">
+            <div class="auth-header">
+                <div style="display: flex; justify-content: center; align-items: center; ">
+                    <img src="{{ url_for('static', filename='images/TechNest_favicon.png') }}" alt="TechNest Logo"
+                        style="max-width: 120px; height: auto; object-fit: contain;">
+                </div>
+                <span class="step-indicator">Step 2 of 2</span>
+                <h2>Complete Your Profile</h2>
+                <p>Help the community get to know you better.</p>
+            </div>
+
+            <form action="{{ url_for('auth.individual_form') }}" method="POST" enctype="multipart/form-data">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" name="first_name" value="{{ session['temp_user_data']['fname'] }}" readonly
+                            class="readonly-field">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="second_name" value="{{ session['temp_user_data']['lname'] }}" readonly
+                            class="readonly-field">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" value="{{ session['temp_user_data']['email'] }}" readonly
+                        class="readonly-field">
+                </div>
+
+                <hr class="form-divider">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob"><i class="fas fa-calendar-alt"></i> Date of Birth</label>
+                        <input type="date" id="dob" name="dob" >
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="education"><i class="fas fa-graduation-cap"></i> Education</label>
+                        <select id="education" name="education" required>
+                            <option value="" disabled selected>Select Level</option>
+                            <option value="HSSC (12Y)">HSSC (12 Years)</option>
+                            <option value="ADP (14Y)">ADP (14 Years)</option>
+                            <option value="BS (16Y)">BS (16 Years)</option>
+                            <option value="MS (18Y)">MS (18 Years)</option>
+                            <option value="PhD">PhD (Doctorate)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience"><i class="fas fa-briefcase"></i> Experience</label>
+                        <select id="experience" name="experience" required>
+                            <option value="" disabled selected>Select Years</option>
+                            <option value="Fresh">Fresh</option>
+                            <option value="1 Year">1 Year</option>
+                            <option value="2 Years">2 Years</option>
+                            <option value="3 Years">3 Years</option>
+                            <option value="5 Years">5 Years</option>
+                            <option value="5+ Years">5+ Years</option>
+                            <option value="10+ Years">10+ Years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone_no"><i class="fas fa-phone"></i> Phone Number</label>
+                        <div class="input-group">
+                            <span class="input-prefix">+92</span>
+                            <input type="tel" id="phone_no" name="phone_no" placeholder="3xxxxxxxxx"
+                                pattern="[3][0-9]{9}" maxlength="10" >
+                        </div>
+                        <small>Enter 10 digits starting with 3</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="city"><i class="fas fa-map-marker-alt"></i> City</label>
+                        <select id="city" name="city" required>
+                            <option value="" disabled selected>Select City</option>
+                            <option value="Multan">Multan</option>
+                            <option value="DG Khan">DG Khan</option>
+                            <option value="Gujranwala">Gujranwala</option>
+                            <option value="Khanewal">Khanewal</option>
+                            <option value="Vehari">Vehari</option>
+                            <option value="Lodhran">Lodhran</option>
+                            <option value="Muzaffargarh">Muzaffargarh</option>
+                            <option value="Bahawalpur">Bahawalpur</option>
+                            <option value="Kabirwala">Kabirwala</option>
+                            <option value="Mailsi">Mailsi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+
+                <div class="form-group search-container">
+                    <label for="profession-input"><i class="fas fa-user-tie"></i> Profession</label>
+                    <div class="search-wrapper">
+                        <input type="text" id="profession-input" required
+                            placeholder="Type to search (e.g. Web Developer)" autocomplete="off">
+                        <div id="profession-suggestions" class="suggestions-list"></div>
+                    </div>
+                    <input type="hidden" name="pro_id" id="selected-pro-id">
+                    <div id="profession-chip" class="chip-container"></div>
+                </div>
+
+                <div class="form-group search-container">
+                    <label for="skills-input"><i class="fas fa-lightbulb"></i>Skills & Technologies (upto 4)</label>
+                    <div class="search-wrapper">
+                        <input type="text" id="skills-input" required placeholder="Search skills (e.g. Python, React)"
+                            autocomplete="off">
+                        <div id="skills-suggestions" class="suggestions-list"></div>
+                    </div>
+                    <input type="hidden" name="skills_list" id="selected-skills-data">
+                    <div id="skills-chips" class="chip-container"></div>
+                </div>
+                <div class="form-group">
+                    <label for="tagline"><i class="fas fa-quote-left"></i> Tagline (Bio)</label>
+                    <textarea id="tagline" name="tagline" class="counted-text" rows="2" maxlength="200"
+                        placeholder="e.g. Passionate Full Stack Developer | Flutter Enthusiast" required></textarea>
+                    <div class="char-counter">
+                        <span class="current">0</span>/200 characters
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+
+                <div class="form-group">
+                    <label for="profile_pic"><i class="fas fa-camera"></i> Profile Picture</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="profile_pic" name="profile_pic" accept="image/*" required>
+                        <p class="file-hint">JPG, PNG or WEBP only.</p>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="linkedin"><i class="fab fa-linkedin"></i> LinkedIn (Optional)</label>
+                        <input type="url" id="linkedin" name="linkedin_link"
+                            placeholder="https://linkedin.com/in/username">
+                    </div>
+                    <div class="form-group">
+                        <label for="other_link"><i class="fas fa-link"></i> Portfolio/Other (Optional)</label>
+                        <input type="url" id="other_link" name="other_link" placeholder="https://github.com/username">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-main auth-btn">Launch My Profile</button>
+            </form>
+        </div>
+    </section>
+</main>
+<script src="{{ url_for('static', filename='js/suggestions.js') }}"></script>
+
+{% endblock %}

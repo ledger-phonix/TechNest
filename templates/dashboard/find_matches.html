@@ -1,0 +1,76 @@
+{% extends "dashboard/layout.html" %}
+{% block title %}Matching - TechNest{% endblock %}
+{% block header_title %}Member Recommendations{% endblock %}
+
+{% block header_subtitle %}
+<p class="text-muted small mb-0">Based on your shared skills and profession.</p>
+{% endblock %}
+{% block header_actions %}
+
+{% endblock %}
+{% block content %}
+
+<div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px;"></div>
+<div class="container-fluid py-4">
+
+    <div class="row">
+        {% if members %}
+            {% for member in members %}
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm border-0" style="border-radius: 15px; background: #fff; transition: transform 0.2s;">
+                    <div class="card-body text-center p-4">
+                        <div class="position-relative d-inline-block mb-3">
+                            <img src="{{ member.avatar }}" class="rounded-circle" 
+                                 width="85" height="85" style="object-fit: cover; border: 3px solid #f8f9fa;"
+                                 onerror="this.src='/static/default-user.png'">
+                        </div>
+                        
+                        <h5 class="card-title mb-1 fw-bold">{{ member.first_name }} {{ member.second_name or '' }}</h5>
+                        <p class="text-primary small mb-3 fw-semibold">{{ member.pro_name }}</p>
+                        
+                        <div class="mb-4">
+                            <span class="badge bg-light text-dark border-0" style="font-size: 0.75rem; padding: 6px 12px; border-radius: 20px;">
+                                {{ member.experience or 'N/A' }} Experience
+                            </span>
+                        </div>
+
+                        <a href="{{ url_for('view_member_profile', role='individual', member_id=member.member_id) }}" 
+                           class="btn btn-primary btn-sm w-100 shadow-sm" style="border-radius: 10px; padding: 8px;">
+                           View Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center py-5">
+                <div class="p-5 bg-white rounded-4 shadow-sm mx-auto" style="max-width: 600px;">
+                    <i class="bi bi-person-search fs-1 text-secondary mb-3"></i>
+                    <h5 class="fw-bold">No specific matches found!</h5>
+                    <p class="text-muted">Try adding more skills to your profile or adjusting your profession to see more members here.</p>
+                    <a href="{{ url_for('dashboard.profile') }}" class="btn btn-outline-primary mt-2">Update My Profile</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    // Ensure scroll is active
+    document.body.style.overflow = "auto";
+    
+    // Highlight sidebar link
+    const membersLink = document.querySelector('a[href*="find-members"]');
+    if(membersLink) {
+        membersLink.classList.add('active');
+    }
+</script>
+
+<style>
+    /* Prevent the cards from looking flat */
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+    }
+</style>
+{% endblock %}

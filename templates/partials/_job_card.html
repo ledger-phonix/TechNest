@@ -1,0 +1,63 @@
+{% for job in jobs %}
+<div class="azure-landscape-card">
+    <div class="card-brand-section">
+        <img src="{{job.company_logo }}"
+            alt="{{ job.company_name }}" class="brand-logo">
+        <div class="brand-info-wrap">
+            <h3 class="brand-name">{{ job.company_name|title }}</h3>
+            <p class="brand-location">
+                <i class="fas fa-map-marker-alt"></i> {{ job.city|title }}
+            </p>
+        </div>
+    </div>
+
+    <div class="card-content-section">
+        <div class="role-header-wrap">
+            <h5 class="section-label">Role</h5>
+            <h2 class="role-title">{{ job.job_role|title }}</h2>
+        </div>
+
+        <div class="meta-metrics">
+            <span class="metric-pill">
+                <i class="fas {% if job.job_type == 'Remote' %}fa-house-laptop{% elif job.job_type == 'Internship' %}fa-graduation-cap{% else %}fa-briefcase{% endif %}"></i>
+                {{ job.job_type }}
+            </span>
+            <span class="metric-pill">
+                <i class="far fa-calendar-alt"></i> Exp: {{ job.expires_at.strftime('%d %b %Y') if job.expires_at }}
+            </span>
+        </div>
+
+        <div class="description-wrap">
+            <h5 class="section-label">Description</h5>
+            <p class="description-text">{{ job.job_description }}</p>
+        </div>
+
+        <div class="skills-wrap">
+            <h5 class="section-label">Required Skills</h5>
+            <div class="tags-flex">
+                {% if job.skills %}
+                {% for skill in job.skills.split(', ') %}
+                <span class="skill-badge">{{ skill|title }}</span>
+                {% endfor %}
+                {% else %}
+                <span class="no-data-text">Contact company for details.</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card-action-section">
+        <div class="status-wrap">
+            <small class="section-label">Status</small>
+            <p class="hiring-status">Hiring Now</p>
+        </div>
+
+        <div class="footer-action-wrap">
+            <a href="{{ job.external_link }}" target="_blank" class="azure-apply-btn">Apply Now</a>
+            <small class="posted-date">
+                Posted {{ job.created_at.strftime('%d %b') }}
+            </small>
+        </div>
+    </div>
+</div>
+{% endfor %}

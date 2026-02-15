@@ -1,0 +1,157 @@
+{% extends "dashboard/layout.html" %}
+
+{% block content %}
+<div class="dashboard-content-wrapper p-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm bg-primary text-white p-4 overflow-hidden position-relative">
+                <div class="d-flex align-items-center justify-content-between position-relative" style="z-index: 2;">
+                    <div>
+                        <h2 class="fw-bold">Welcome back, {{ name }}!</h2>
+                        <p class="mb-0 opacity-75">Logged in as <strong>{{ role.capitalize() }}</strong></p>
+                    </div>
+                    <div class="d-none d-md-block">
+                        <img src="{{ profile_url }}" class="rounded-circle border border-3 border-white shadow"
+                            width="90" height="90" style="object-fit: cover;">
+                    </div>
+                </div>
+                <i class="bi bi-rocket-takeoff position-absolute end-0 bottom-0 mb-n3 me-n2 opacity-25"
+                    style="font-size: 8rem;"></i>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-4 mb-4 bg-light border-start border-4 border-info">
+                <h6 class="fw-bold mb-3 text-info"><i class="bi bi-controller me-2"></i>Quiz of the Day</h6>
+
+                {% if active_quiz %}
+                <div id="quiz-container">
+                    <p class="fw-bold mb-3">{{ active_quiz.question }}</p>
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-info btn-sm text-start"
+                            onclick="checkAnswer('A', '{{ active_quiz.correct_option }}', this)">A) {{
+                            active_quiz.option_a }}</button>
+                        <button class="btn btn-outline-info btn-sm text-start"
+                            onclick="checkAnswer('B', '{{ active_quiz.correct_option }}', this)">B) {{
+                            active_quiz.option_b }}</button>
+                        <button class="btn btn-outline-info btn-sm text-start"
+                            onclick="checkAnswer('C', '{{ active_quiz.correct_option }}', this)">C) {{
+                            active_quiz.option_c }}</button>
+                        <button class="btn btn-outline-info btn-sm text-start"
+                            onclick="checkAnswer('D', '{{ active_quiz.correct_option }}', this)">D) {{
+                            active_quiz.option_d }}</button>
+                    </div>
+
+                    <div id="quiz-feedback" class="mt-3 fw-bold text-center" style="display:none;"></div>
+                </div>
+                {% else %}
+                <p class="text-muted small">No quiz for today!</p>
+                {% endif %}
+            </div>
+
+            <div class="card border-0 shadow-sm p-3">
+                <div class="d-flex align-items-center">
+                    <div class="bg-success-subtle text-success rounded-3 p-3 me-3">
+                        <i class="bi bi-shield-check fs-4"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-0 small">Account Security</h6>
+                        <p class="fw-bold mb-0 small">Verified Profile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8">
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                    <h6 class="fw-bold mb-0"><i class="bi bi-newspaper me-2 text-primary"></i>TechNest Internal Pulse
+                    </h6>
+                </div>
+
+                <div class="row">
+                    {% if internal_news %}
+                    {% for news in internal_news %}
+                    <div class="col-12 mb-3">
+                        <div class="p-3 border rounded-3 bg-white shadow-sm border-start border-4 border-primary">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <span class="badge bg-primary-subtle text-primary x-small mb-1 text-uppercase">
+                                        {{ news.category }}
+                                    </span>
+                                    <h6 class="fw-bold text-dark mb-0">{{ news.title }}</h6>
+                                </div>
+                                <small class="text-muted" style="font-size: 0.7rem;">
+                                    <i class="bi bi-clock me-1"></i>
+                                    {# Ensure created_at is a datetime object in Python #}
+                                    {{ news.created_at.strftime('%d %b') if news.created_at else 'Recent' }}
+                                </small>
+                            </div>
+
+                            <p class="text-muted mb-0 small" style="line-height: 1.5;">
+                                {{ news.content[:250] }}{% if news.content|length > 250 %}...{% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-broadcast text-muted fs-1 mb-2"></i>
+                        <p class="text-muted mb-0">No internal updates posted yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-3 bg-light border-start border-4 border-warning">
+                <h6 class="fw-bold small mb-1"><i class="bi bi-lightbulb me-2 text-warning"></i>TechNest Tip</h6>
+                <p class="x-small text-muted mb-0" style="font-size: 0.8rem;">
+                    {% if role == 'company' %}
+                    Keep your company profile updated to attract the best talent.
+                    {% else %}
+                    Completing your "Skills" section increases your visibility by 40%.
+                    {% endif %}
+                    <a href="{{ url_for('dashboard.profile') }}" class="text-decoration-none fw-bold ms-2">Update
+                        &rarr;</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Clean transition without the 'link' feel */
+    .dashboard-content-wrapper .card {
+        transition: transform 0.2s ease;
+    }
+
+    .x-small {
+        font-size: 0.75rem;
+    }
+
+    /* Ensuring descriptions don't break the layout */
+    .small {
+        font-size: 0.875rem;
+    }
+</style>
+<script>
+    function checkAnswer(selected, correct, element) {
+        const feedback = document.getElementById('quiz-feedback');
+        const buttons = document.querySelectorAll('#quiz-container button');
+
+        // Disable all buttons after one click
+        buttons.forEach(btn => btn.disabled = true);
+
+        feedback.style.display = 'block';
+
+        if (selected === correct) {
+            element.classList.replace('btn-outline-info', 'btn-success');
+            feedback.innerHTML = '<span class="text-success">✅ Correct! Well done.</span>';
+        } else {
+            element.classList.replace('btn-outline-info', 'btn-danger');
+            feedback.innerHTML = `<span class="text-danger">❌ Incorrect. The answer was ${correct}.</span>`;
+        }
+    }
+</script>
+{% endblock %}

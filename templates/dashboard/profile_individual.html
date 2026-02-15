@@ -1,0 +1,139 @@
+{% extends "dashboard/layout.html" %}
+{% block title %}Individual Profile - TechNest{% endblock %}
+{% block header_title %}Edit Profile{% endblock %}
+
+{% block header_subtitle %}
+<p class="text-muted small mb-0">Update your personal and professional information.</p>
+{% endblock %}
+
+{% block header_actions %}
+<button type="submit" form="profileForm" class="btn btn-primary px-4 fw-bold shadow-sm">
+    <i class="fas fa-save me-2"></i>Save Changes
+</button>
+{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded shadow-sm p-4 p-md-5">
+    <form action="{{ url_for('dashboard.update_profile_individual') }}" method="POST" enctype="multipart/form-data"
+        id="profileForm">
+        <div class="row">
+
+            <div class="col-lg-3 col-md-4 text-center text-md-start border-end-md pe-md-5 profile-upload-container">
+                <div class="profile-pic-wrapper mb-3 position-relative d-inline-block">
+                    <img src="{{ member.profile_url }}" id="preview-img"
+                        class="rounded-circle border border-4 border-white shadow-sm" width="150" height="150"
+                        style="object-fit: cover;">
+
+                    <label for="profile_pic"
+                        class="btn btn-sm btn-dark position-absolute bottom-0 end-0 rounded-circle p-2 shadow-sm"
+                        style="cursor: pointer;">
+                        <i class="fas fa-camera"></i>
+                        <input type="file" name="profile_pic" id="profile_pic" hidden accept="image/*">
+                    </label>
+                </div>
+                <div class="mt-2">
+                    <p class="mb-1 fw-bold small text-dark">Profile Photo</p>
+                    <p class="text-muted file-hint" style="font-size: 0.75rem;">JPG, PNG or WEBP (Max 2MB)</p>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-8 ps-md-5">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1">First Name</label>
+                        <input type="text" name="first_name" class="form-control form-control-lg bg-light border-0"
+                            value="{{ member.first_name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1">Last Name</label>
+                        <input type="text" name="second_name" class="form-control form-control-lg bg-light border-0"
+                            value="{{ member.second_name }}">
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1"><i
+                                class="fas fa-graduation-cap me-2 text-primary"></i>Education</label>
+                        <select name="education" class="form-select form-select-lg bg-light border-0">
+                            <option value="HSSC (12Y)" {% if member.education=='HSSC (12Y)' %}selected{% endif %}>HSSC
+                                (12 Years)</option>
+                            <option value="ADP (14Y)" {% if member.education=='ADP (14Y)' %}selected{% endif %}>ADP (14
+                                Years)</option>
+                            <option value="BS (16Y)" {% if member.education=='BS (16Y)' %}selected{% endif %}>BS (16
+                                Years)</option>
+                            <option value="MS (18Y)" {% if member.education=='MS (18Y)' %}selected{% endif %}>MS (18
+                                Years)</option>
+                            <option value="PhD" {% if member.education=='PhD' %}selected{% endif %}>PhD (Doctorate)
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1"><i
+                                class="fas fa-briefcase me-2 text-primary"></i>Experience</label>
+                        <select name="experience" class="form-select form-select-lg bg-light border-0">
+                            <option value="Fresh" {% if member.experience=='Fresh' %}selected{% endif %}>Fresh</option>
+                            <option value="1 Year" {% if member.experience=='1 Year' %}selected{% endif %}>1 Year
+                            </option>
+                            <option value="2 Years" {% if member.experience=='2 Years' %}selected{% endif %}>2 Years
+                            </option>
+                            <option value="3 Years" {% if member.experience=='3 Years' %}selected{% endif %}>3 Years
+                            </option>
+                            <option value="5+ Years" {% if member.experience=='5+ Years' %}selected{% endif %}>5+ Years
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6 search-container">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1"><i
+                                class="fas fa-user-tie me-2 text-primary"></i> Profession</label>
+                        <div class="search-wrapper">
+                            <input type="text" id="profession-input"
+                                class="form-control form-control-lg bg-light border-0"
+                                placeholder="Search profession..." autocomplete="off">
+                            <div id="profession-suggestions" class="suggestions-list"></div>
+                        </div>
+                        <input type="hidden" name="pro_id" id="selected-pro-id" value="{{ member.pro_id }}">
+                        <div id="profession-chip" class="chip-container mt-2"
+                            data-initial-name="{{ member.profession_name }}" data-initial-id="{{ member.pro_id }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6 search-container">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1"><i
+                                class="fas fa-lightbulb me-2 text-warning"></i> Key Skills</label>
+                        <div class="search-wrapper">
+                            <input type="text" id="skills-input" class="form-control form-control-lg bg-light border-0"
+                                placeholder="Search skills..." autocomplete="off">
+                            <div id="skills-suggestions" class="suggestions-list"></div>
+                        </div>
+                        <input type="hidden" name="skills_list" id="selected-skills-data"
+                            value="{{ member.skills_ids_combined }}">
+                        <div id="skills-chips" class="chip-container mt-2" data-names="{{ member.skills_combined }}"
+                            data-ids="{{ member.skills_ids_combined }}"></div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+
+                    <label for="tagline" class="fw-bold"><i class="fas fa-quote-left text-muted me-2"></i> Tagline
+                        (Bio)</label>
+
+                    <textarea id="tagline" name="tagline" class="form-control counted-text" rows="3" maxlength="200"
+                        placeholder="e.g. Passionate Full Stack Developer | Flutter Enthusiast">{{ member.tagline }}</textarea>
+
+                    <div class="char-counter text-end small mt-1">
+
+                        <span class="current">0</span>/200 characters
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

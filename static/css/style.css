@@ -1,0 +1,2819 @@
+/* Global Theme Variables */
+/* --- Your Existing Variables + New Spacing Vars --- */
+:root {
+    /* Brand Colors */
+    --primary-azure: #007fff;
+    --dark-azure: #0056b3;
+    --navy-azure: #004578;
+    /* Added for your LinkedIn/Primary buttons */
+    --light-azure: #f0f8ff;
+    --white: #ffffff;
+
+    /* Text & Borders */
+    --text-main: #333333;
+    --text-muted: #666666;
+    --border-light: #e1e4e8;
+
+    /* Elevation & Feedback */
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --transition-fast: 0.2s ease;
+    --transition-standard: 0.3s ease;
+
+    /* Layout Fixed Values */
+    --nav-height: 70px;
+    /* Prevents Hero overlap */
+    --card-radius: 12px;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Cleaned: Added #ffffff as a fallback for the variable */
+    background-color: var(--white, #ffffff);
+    color: var(--text-main);
+}
+
+/* Header & Navbar */
+#header {
+    /* Use rgba: 255, 255, 255 is white, 0.8 is 80% opacity */
+    background-color: rgba(255, 255, 255, 0.85);
+
+    /* The Magic Line: Blurs the content behind the header */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Support for Safari */
+
+    /* Keep your existing sticky logic */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    /* Existing Styles */
+    height: var(--nav-height, 70px);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 127, 255, 0.1);
+    /* Subtle Azure line */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+/* 1. Left Section */
+.nav-logo-container {
+    flex: 1;
+    /* Takes 1/3 of the space */
+    display: flex;
+    justify-content: flex-start;
+}
+
+#nav-logo {
+    height: 70px;
+    image-rendering: -webkit-optimize-contrast;
+    /* Adjusted to fit your 70px nav height comfortably */
+    width: auto;
+    display: block;
+}
+
+/* 2. Middle Menu - Perfectly Centered and Fluid */
+.nav-menu-container {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-menu-list {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    /* Balanced gap */
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    /* Prevents links from breaking into two lines */
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--primary-azure);
+}
+/* when user is logged in  */
+/* Dashboard Button (Solid Style) */
+.btn-dashboard {
+    background-color: #0d6efd; /* Your Tech blue */
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.btn-dashboard:hover {
+    background-color: #0b5ed7;
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Logout Button (Outline/Danger Style) */
+.btn-logout {
+    color: #dc3545 !important; /* Professional Red */
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: 1px solid #dc3545;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.btn-logout:hover {
+    background-color: #dc3545;
+    color: white !important;
+    text-decoration: none;
+}
+/* 3. Auth Buttons - Stays on the Right */
+.nav-auth-container {
+    flex: 1;
+    /* Takes 1/3 of the space */
+    display: flex;
+    justify-content: flex-end;
+    /* Pushes buttons to the far right */
+    gap: 12px;
+}
+
+#signup-btn,
+#login-btn {
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+#signup-btn {
+    background-color: var(--primary-azure);
+    color: var(--white);
+    border: 2px solid var(--primary-azure);
+}
+
+#login-btn {
+    color: var(--primary-azure);
+    border: 2px solid var(--primary-azure);
+}
+
+#signup-btn:hover {
+    background-color: var(--dark-azure);
+    border-color: var(--dark-azure);
+}
+
+#login-btn:hover {
+    background-color: var(--light-azure);
+}
+
+/* Hamburger Toggle */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--primary-azure);
+}
+
+/* --- Responsive (Fixing the 'Ugly' Overlap) --- */
+@media (max-width: 768px) {
+    #nav-logo {
+        height: 50px; /* Small and sharp for mobile */
+    }
+    
+}
+@media (max-width: 1100px) {
+    .menu-toggle {
+        display: block;
+        order: 3;
+        /* Ensures toggle stays on the far right */
+    }
+
+    .nav-logo-container {
+        order: 1;
+    }
+
+    .nav-menu-container {
+        display: none;
+        position: absolute;
+        top: var(--nav-height);
+        left: 0;
+        width: 100%;
+        background-color: var(--white);
+        flex-direction: column;
+        padding: 20px 0;
+        border-bottom: 2px solid var(--primary-azure);
+        /* FIX: Added z-index to ensure it overlaps page content */
+        z-index: 999;
+        /* FIX: Reset flex so it doesn't fight the absolute positioning */
+        flex: none;
+    }
+
+    .nav-menu-container.active {
+        display: flex;
+    }
+
+    .nav-menu-list {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 10%;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    /* Note: For this to work, .nav-auth-container must be 
+       inside .nav-menu-container in your HTML for mobile 
+    */
+    .nav-auth-container {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        padding: 15px 0;
+        /* Slightly more padding for touch targets */
+        border-top: 1px solid #f0f0f0;
+        flex: none;
+        /* Reset flex */
+    }
+
+    #signup-btn,
+    #login-btn {
+        width: 140px;
+        /* Slightly wider for better finger tap area */
+        text-align: center;
+    }
+}
+
+/* --- Hero Section Styles --- */
+
+#hero {
+    position: relative;
+    /* FIX: min-height is safer than height for content expansion on small screens */
+    min-height: calc(100vh - var(--nav-height));
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: var(--white);
+}
+
+/* Background Image with Low Opacity */
+#hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/hero-bg.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    /* Minimal opacity as requested */
+    z-index: 1;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    /* Ensures content is above the background image */
+    text-align: center;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    color: var(--text-main);
+    margin-bottom: 10px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.8rem;
+    color: var(--text-main);
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Typing Effect Color */
+.typed-text {
+    color: var(--primary-azure);
+    font-weight: 700;
+}
+
+/* Blinking Cursor */
+.cursor {
+    display: inline-block;
+    width: 3px;
+    background-color: var(--primary-azure);
+    margin-left: 0.1rem;
+    animation: blink 0.7s infinite;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 35px;
+    line-height: 1.6;
+}
+
+/* Hero Buttons */
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn-main {
+    text-decoration: none;
+    background-color: var(--primary-azure);
+    color: var(--white);
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-secondary {
+    text-decoration: none;
+    color: var(--primary-azure);
+    border: 2px solid var(--primary-azure);
+    padding: 13px 35px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-main:hover {
+    background-color: var(--dark-azure);
+    transform: translateY(-3px);
+}
+
+.btn-secondary:hover {
+    background-color: var(--light-azure);
+    transform: translateY(-3px);
+}
+
+/* Cursor Blink Animation */
+@keyframes blink {
+
+    from,
+    to {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* --- Responsive Hero --- */
+@media (max-width: 768px) {
+    #hero {
+        /* On very short mobile screens, we ensure padding so content doesn't hit edges */
+        padding: 60px 0;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.4rem;
+    }
+
+    .hero-btns {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .btn-main,
+    .btn-secondary {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+}
+
+/* --- Feature Sections General Styling Home page --- */
+
+.feature-section {
+    padding: 100px 0;
+    background-color: var(--white);
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Alternating background for visual interest */
+#ecosystem,
+#why-join {
+    background-color: #fcfdfe;
+    /* Extremely light blue tint */
+}
+
+.section-container {
+    max-width: 1000px;
+    padding: 0 5%;
+    text-align: center;
+}
+
+/* Small Tagline (e.g., OUR MISSION) */
+.section-tag {
+    display: inline-block;
+    color: var(--primary-azure);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    padding: 5px 15px;
+    background-color: var(--light-azure);
+    border-radius: 50px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--text-main);
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+.section-text {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-cta {
+    margin-top: 20px;
+}
+
+/* --- Scroll Animation Classes --- */
+
+/* Initial State: Hidden and shifted down */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    /* Reduced from 50px for a smoother, less "jumpy" feel */
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+    /* Optimization: Tells browser to prepare for animation */
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .feature-section {
+        padding: 70px 20px;
+    }
+
+    .section-title {
+        font-size: 1.85rem;
+    }
+
+    .section-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        /* Tighter line height for mobile readability */
+        margin-bottom: 30px;
+    }
+}
+
+/* --- About Page Styles --- */
+
+#about-page {
+    background-color: var(--white);
+    padding-bottom: 80px;
+}
+
+.about-hero {
+    background-color: var(--light-azure);
+    padding: 100px 5%;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.about-hero h1 {
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.about-hero p {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.about-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.about-block {
+    margin-bottom: 50px;
+    padding: 30px;
+    background-color: var(--white);
+    border-radius: 12px;
+    border-left: 5px solid var(--primary-azure);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    /* Cleaned: will-change helps the browser render the slide smoothly */
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.about-block:hover {
+    transform: translateX(10px);
+    /* Subtle slide on hover */
+}
+
+.about-block h2 {
+    color: var(--primary-azure);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.about-block p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* Custom List Styling for "Offers" */
+.offers-list ul {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.offers-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Azure Checkmark Bullets */
+.offers-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary-azure);
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    /* Keeps the icon height controlled */
+}
+
+/* --- Responsive About Page --- */
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 60px 5%;
+    }
+
+    .about-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .about-block {
+        padding: 20px;
+    }
+
+    .about-block:hover {
+        transform: none;
+        /* Disable slide on mobile */
+    }
+
+    .about-block {
+        border-left-width: 4px;
+        margin-bottom: 30px;
+    }
+}
+
+/* --- Privacy Policy Page Styles --- */
+
+#privacy-page {
+    background-color: var(--white);
+    padding-bottom: 80px;
+}
+
+.privacy-hero {
+    background-color: var(--light-azure);
+    padding: 100px 5%;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.privacy-hero h1 {
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+.privacy-hero p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.privacy-wrapper {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.privacy-block {
+    margin-bottom: 40px;
+    line-height: 1.8;
+}
+
+.privacy-block h2 {
+    color: var(--text-main);
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Subtle dot before the heading */
+.privacy-block h2::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-azure);
+    border-radius: 50%;
+    /* FIX: Ensure the dot stays perfectly circular and doesn't shrink */
+    flex-shrink: 0;
+}
+
+.privacy-block p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+/* List Styling (Consistent with About Page) */
+.privacy-list ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.privacy-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.privacy-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    /* FIX: Aligns the bullet vertically with the center of the first line of text */
+    top: -2px;
+    color: var(--primary-azure);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Highlight the Chat Deletion Policy */
+.highlight-block {
+    /* CLEANED: Removed duplicate background. Azure fits your brand better. */
+    background-color: var(--light-azure);
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-azure);
+    margin: 30px 0;
+    /* Added margin for better spacing */
+}
+
+.highlight-block h2 {
+    color: var(--dark-azure);
+}
+
+/* --- Responsive Privacy Page --- */
+@media (max-width: 768px) {
+    .privacy-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .privacy-block h2 {
+        font-size: 1.3rem;
+    }
+}
+
+/* --- Community Guidelines Page Styles --- */
+
+#community-page {
+    background-color: #f9fbff;
+    /* Very light background for contrast */
+    padding-bottom: 100px;
+}
+
+.community-hero {
+    background-color: var(--primary-azure);
+    /* Darker hero for this page */
+    padding: 100px 5%;
+    text-align: center;
+    color: var(--white);
+    margin-bottom: 60px;
+}
+
+.community-hero h1 {
+    font-size: 3.2rem;
+    margin-bottom: 20px;
+}
+
+.community-hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 1;
+}
+
+.community-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.community-block {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 127, 255, 0.05);
+    border: 1px solid rgba(0, 127, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.community-block h2 {
+    color: var(--primary-azure);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.community-block p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .community-hero h1 {
+        font-size: 2.5rem;
+        /* Scaled down for mobile */
+    }
+
+    .community-block {
+        /* FIX: Reduced padding so text has room to breathe on small screens */
+        padding: 25px 20px;
+    }
+
+    .community-block h2 {
+        font-size: 1.4rem;
+        /* FIX: Ensure icons and text stay aligned if title wraps */
+        align-items: flex-start;
+    }
+}
+
+/* --- Contact Page Styles --- */
+
+#contact-page {
+    background-color: #fcfdfe;
+    padding-bottom: 100px;
+}
+
+.contact-hero {
+    background-color: var(--light-azure);
+    padding: 100px 5%;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.contact-hero h1 {
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+.contact-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    /* Info on left, Form on right */
+    gap: 50px;
+    align-items: start;
+}
+
+/* Contact Info Styling */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.info-item i {
+    font-size: 1.5rem;
+    color: var(--primary-azure);
+    background: var(--light-azure);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.info-item h3 {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-bottom: 5px;
+}
+
+.info-item p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Form Styling */
+.contact-form-card {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.form-group textarea {
+    /* min-height: 150px; */
+    resize: vertical;
+    /* FIX: Prevents users from breaking the layout horizontally */
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+/* Azure Focus State */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-azure);
+    box-shadow: 0 0 0 3px rgba(0, 127, 255, 0.1);
+}
+
+/* FIX: Styling the missing Submit Button */
+.contact-submit {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    background-color: var(--primary-azure);
+    color: var(--white);
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition-standard, 0.3s);
+}
+
+.contact-submit:hover {
+    background-color: var(--dark-azure);
+    transform: translateY(-2px);
+}
+
+/* --- Responsive Contact Page --- */
+@media (max-width: 992px) {
+    .contact-container {
+        /* FIX: Stack info on top of form for tablets/phones */
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .contact-form-card {
+        padding: 25px;
+        /* Reduced padding for mobile screens */
+    }
+
+    .info-item {
+        padding: 15px;
+    }
+}
+
+/* --- Auth Pages (Signup/Login) --- */
+
+#auth-page {
+    background-color: #f4f7fa;
+    /* FIX: min-height instead of height allows the page to grow if errors appear */
+    min-height: calc(100vh - var(--nav-height));
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.auth-container {
+    width: 95%;
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 0 15px;
+    display: flex;
+    /* Added: Helps center the card inside */
+    flex-direction: column;
+    align-items: center;
+    /* Added: Ensures the login card stays centered */
+}
+
+.auth-card {
+    background: var(--white);
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 127, 255, 0.1);
+
+    /* Ensure the card itself doesn't overflow */
+    margin: 0 auto;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h2 {
+    color: var(--text-main);
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.auth-header p {
+    color: var(--primary-azure);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+/* Radio Button Styling */
+/* --- Smaller & Visible Azure Radio Buttons --- */
+.radio-group {
+    display: flex;
+    gap: 10px;
+    /* Reduced gap */
+    margin-top: 8px;
+}
+
+.radio-label {
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+}
+
+.radio-label input {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    /* Smaller padding */
+    border: 1.5px solid #ddd;
+    /* Thinner border */
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    background: var(--white);
+    min-height: 60px;
+    user-select: none;
+    /* More compact height */
+}
+
+.radio-tile i {
+    font-size: 1rem;
+    /* Smaller icon */
+    margin-bottom: 3px;
+    color: #888;
+}
+
+.radio-tile span {
+    font-size: 0.85rem;
+    /* Smaller text */
+    color: #666;
+}
+
+/* Checked State - Azure Theme */
+.radio-label input:checked+.radio-tile {
+    border-color: var(--primary-azure);
+    background-color: rgba(0, 127, 255, 0.05);
+    /* Very light azure tint */
+}
+
+.radio-label input:checked+.radio-tile i,
+.radio-label input:checked+.radio-tile span {
+    color: var(--primary-azure);
+    /* Uses your primary variable for visibility */
+    font-weight: 700;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+    display: block;
+}
+
+.error-text {
+    color: #d93025;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.auth-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    background-color: var(--primary-azure);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.auth-footer a {
+    color: var(--primary-azure);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+@media (max-width: 480px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .auth-card {
+        padding: 25px;
+    }
+}
+
+/* Password Wrapper Logic */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 45px;
+}
+
+.password-wrapper i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+/* Strength Meter */
+.strength-meter {
+    height: 5px;
+    width: 100%;
+    background-color: #eee;
+    margin-top: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: 0.3s ease;
+}
+
+/* Status Colors */
+.weak {
+    background-color: #ff4d4d;
+    width: 25% !important;
+}
+
+.fair {
+    background-color: #ffa500;
+    width: 50% !important;
+}
+
+.good {
+    background-color: #ffd700;
+    width: 75% !important;
+}
+
+.strong {
+    background-color: #2ecc71;
+    width: 100% !important;
+}
+
+.status-text {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.match-success {
+    color: #2ecc71;
+}
+
+.match-fail {
+    color: #d93025;
+}
+
+.password-requirements {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    margin: 15px 0;
+    list-style: none;
+}
+
+.password-requirements li {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.password-requirements li.valid {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+/* Disable button until valid */
+.auth-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+
+/* Specific Login Styles */
+.label-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.forgot-link {
+    font-size: 0.85rem;
+    color: var(--primary-azure);
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+.form-options {
+    margin: 15px 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    accent-color: var(--primary-azure);
+    width: 16px;
+    height: 16px;
+}
+
+/* --- Responsive Contact Page --- */
+@media (max-width: 900px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        /* Stack vertically on small screens */
+    }
+
+    .contact-hero h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* Guideline List Styling */
+.guideline-list ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.guideline-list li {
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 15px;
+    color: var(--text-muted);
+}
+
+/* Custom Azure Circle Bullets */
+.guideline-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    background-color: var(--light-azure);
+    border: 2px solid var(--primary-azure);
+    border-radius: 50%;
+}
+
+/* Enforcement Highlight */
+.enforcement-box {
+    background-color: #fff9f9;
+    border: 1px solid #ffdede;
+}
+
+.enforcement-box h2 {
+    color: #d93025;
+    /* Warning Red */
+}
+
+/* --- Responsive Community Page --- */
+@media (max-width: 768px) {
+    .community-hero {
+        padding: 60px 5%;
+    }
+
+    .community-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .community-block {
+        padding: 25px;
+    }
+}
+
+/* --- Responsive Fixes --- */
+@media (max-width: 480px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+        /* Keep it tight on mobile */
+    }
+
+    /* FIX: Password requirements can get squashed on mobile */
+    .password-requirements {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- FAQ Page Styles --- */
+
+.faq-hero {
+    background-color: var(--light-azure);
+    padding: 80px 5%;
+    text-align: center;
+}
+
+.faq-hero h1 {
+    font-size: 2.8rem;
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+.faq-hero p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 5%;
+}
+
+.faq-group {
+    margin-bottom: 40px;
+}
+
+.faq-category-title {
+    color: var(--primary-azure);
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--primary-azure);
+    padding-left: 15px;
+}
+
+.faq-item {
+    background: var(--white);
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.faq-item:hover {
+    border-color: var(--primary-azure);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 20px;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+.faq-question i {
+    transition: transform 0.3s ease;
+    color: var(--primary-azure);
+}
+
+/* When the accordion is open */
+.faq-item.active .faq-question {
+    color: var(--primary-azure);
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    /* Hidden by default */
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--light-azure);
+}
+
+.faq-answer p {
+    padding: 0 20px 20px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Show answer when active */
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    /* Large enough value to fit content */
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .faq-hero h1 {
+        font-size: 2rem;
+    }
+
+    .faq-question {
+        font-size: 1rem;
+        padding: 15px;
+    }
+}
+
+/* --- Footer Styles --- */
+
+#main-footer {
+    background-color: var(--white);
+    /* Updated: Changed from #eee to your Azure theme variable */
+    /* border-top: 1px solid var(--primary-azure);  */
+    border-top: 1px solid rgba(0, 127, 255, 0.3);
+    padding: 60px 0 30px;
+    width: 100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    /* Allows columns to wrap on smaller screens */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4%;
+    gap: 40px;
+}
+
+/* Footer Columns */
+.footer-col {
+    flex: 1;
+    min-width: 200px;
+    /* Prevents columns from getting too narrow */
+}
+
+.footer-logo-img {
+    height: 70px;
+    /* Matches the navbar's visual weight */
+    width: auto;
+    margin-bottom: 15px;
+}
+
+.copyright-text {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-heading {
+    color: var(--text-main);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Azure Underline for Headings */
+.footer-heading::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 30px;
+    height: 2px;
+    background-color: var(--primary-azure);
+}
+
+/* Footer Links */
+.footer-nav-list {
+    list-style: none;
+}
+
+.footer-nav-list li {
+    margin-bottom: 12px;
+}
+
+.footer-nav-list a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 15px;
+    transition: 0.3s ease;
+}
+
+.footer-nav-list a:hover {
+    color: var(--primary-azure);
+    padding-left: 5px;
+    /* Subtle movement on hover */
+}
+
+/* Social Media Icons */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--light-azure);
+    color: var(--primary-azure);
+    text-decoration: none;
+    transition: 0.3s ease;
+    font-size: 18px;
+}
+
+.social-link:hover {
+    background-color: var(--primary-azure);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+/* --- Responsive Footer (Mobile) --- */
+
+@media (max-width: 768px) {
+    #main-footer {
+        padding: 40px 0 20px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        /* Stack columns vertically */
+        align-items: center;
+        /* Center everything */
+        text-align: center;
+        gap: 35px;
+    }
+
+    .footer-col {
+        width: 100%;
+    }
+
+    .footer-heading::after {
+        left: 50%;
+        transform: translateX(-50%);
+        /* Centers the azure underline */
+    }
+
+    .footer-nav-list a:hover {
+        padding-left: 0;
+        /* Remove side-movement on mobile for better alignment */
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .copyright-text {
+        margin-top: 10px;
+    }
+}
+
+/* --- Footer Fixes --- */
+@media (max-width: 768px) {
+    .footer-logo-img {
+        display: block;
+        height: 50px;
+        margin: 0 auto 15px;
+        /* FIX: Ensures logo centers on mobile */
+    }
+
+    .footer-heading {
+        /* FIX: Ensures the underline centers perfectly with the text */
+        display: inline-block;
+        width: 100%;
+    }
+}
+
+/* --- OTP Specific Styles (opt_verification.html) --- */
+
+/* Wrapper for the 6 inputs */
+.otp-input-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    /* Default gap for desktop */
+    margin: 25px 0;
+    width: 100%;
+    /* Ensure it doesn't force width */
+}
+
+/* Default Field Size (Desktop) */
+.otp-field {
+    width: 50px;
+    height: 60px;
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: #f8fbff;
+    color: var(--primary-azure);
+    transition: all 0.3s ease;
+    /* Prevents browsers from zooming in on input focus on iPhone */
+    font-size: 1.5rem;
+}
+
+.otp-field:focus {
+    border-color: var(--primary-azure);
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 127, 255, 0.2);
+    background: var(--white);
+}
+
+.timer-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.resend-link {
+    font-weight: 600;
+    color: var(--primary-azure);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.resend-link.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.otp-field::-webkit-outer-spin-button,
+.otp-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .otp-input-container {
+        gap: 8px;
+        /* Reduce gap significantly */
+    }
+
+    .otp-field {
+        width: 40px;
+        /* Shrink width */
+        height: 50px;
+        /* Shrink height */
+        font-size: 1.2rem;
+        /* Smaller text */
+        border-radius: 6px;
+    }
+}
+
+/* Extra small devices (like older iPhone SE, Galaxy Fold outer screen) */
+@media (max-width: 350px) {
+    .otp-field {
+        width: 30px;
+        height: 45px;
+        font-size: 1rem;
+    }
+}
+
+/* Profile  stylings  (form_individual.html,form_company.html)*/
+.profile-card {
+    width: 95%;
+    max-width: 950px;
+    /* MUCH WIDER on Desktop */
+    margin: 30px auto;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 127, 255, 0.08);
+    /* Soft Azure shadow */
+    padding: 25px;
+
+}
+
+/* Make dropdowns and date inputs full width to match other fields */
+.form-group select,
+.form-group input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #d1e3f8;
+    border-radius: 8px;
+    background-color: var(--white);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+    appearance: none;
+    /* Removes default browser styling */
+    cursor: pointer;
+}
+
+/* Add a custom arrow to dropdowns since 'appearance: none' removes the default one */
+.form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23007fff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center;
+    padding-right: 40px;
+}
+
+.form-group select:focus,
+.form-group input[type="date"]:focus {
+    border-color: var(--primary-azure);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 127, 255, 0.1);
+}
+
+/* Row Handling: Default to stack (Mobile) */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.readonly-field {
+    background-color: #f8f9fa !important;
+    color: #6c757d;
+    cursor: not-allowed;
+    border: 1.5px dashed #ced4da !important;
+    font-weight: 500;
+}
+
+.form-divider {
+    border: 0;
+    border-top: 1px solid #e3f2fd;
+    margin: 30px 0;
+}
+
+/* Phone Input Group */
+.input-group {
+    display: flex;
+    border: 1.5px solid #d1e3f8;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+    border-color: var(--primary-azure);
+    box-shadow: 0 0 0 4px rgba(0, 127, 255, 0.1);
+}
+
+.input-prefix {
+    background: var(--light-azure);
+    color: var(--primary-azure);
+    padding: 12px 16px;
+    font-weight: bold;
+    border-right: 1.5px solid #d1e3f8;
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+    border: none !important;
+    /* Remove individual border */
+    flex-grow: 1;
+    padding: 12px;
+}
+
+/* Skills Grid: Default 2 cols on mobile */
+.skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* File Upload Styling */
+.file-upload-wrapper {
+    border: 2px dashed #d1e3f8;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    background: #f8fbff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.file-upload-wrapper:hover {
+    border-color: var(--primary-azure);
+    background: #f0f7ff;
+}
+
+/* --- DESKTOP SPECIFIC STYLES --- */
+@media (min-width: 768px) {
+    .profile-card {
+        padding: 50px;
+        /* More internal breathing room on big screens */
+    }
+
+    /* Turn rows into 2 columns on desktop */
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        /* Bigger gap between Name/Surname, Gender/DOB */
+    }
+
+    /* Make the Skills look cleaner (4 in a row) */
+    .skills-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+}
+
+.file-upload-wrapper:hover {
+    border-color: #007bff;
+    background: #f0f7ff;
+}
+
+.file-hint {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 8px;
+}
+
+/* Date picker blue tint */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(39%) sepia(87%) saturate(3470%) hue-rotate(202deg) brightness(101%) contrast(105%);
+    cursor: pointer;
+}
+
+/* Container for the chips */
+.chip-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    min-height: 32px;
+}
+
+.char-counter {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+    transition: all 0.3s ease;
+}
+
+.current {
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.counted-text:focus+.char-counter {
+    color: #4facfe;
+    /* Highlight counter when typing */
+}
+
+/* Individual Chip Style */
+.chip {
+    background-color: #e3f2fd;
+    /* Light Azure */
+    color: #007bff;
+    /* TechNest Blue */
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid #c2e2ff;
+    animation: fadeIn 0.3s ease;
+}
+
+.search-container {
+    min-height: 90px;
+    /* Prevents layout jump when input disappears */
+}
+
+.chip .remove-icon,
+.service-tag i {
+    margin-left: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.chip .remove-icon:hover,
+.service-tag i:hover {
+    color: #ff4d4d;
+    transform: scale(1.1);
+}
+
+.chip,
+.service-tag {
+    background-color: var(--light-azure);
+    color: var(--primary-azure);
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid #c2e2ff;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Styling for the dropdown list */
+.suggestions-list {
+    position: absolute;
+    background: var(--white);
+    width: 100%;
+    z-index: 1000;
+    border: 1px solid #d1e3f8;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: none;
+    /* JS will toggle this to 'block' */
+}
+
+.suggestion-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: var(--text-main);
+}
+
+.suggestion-item:hover {
+    background: var(--light-azure);
+    color: var(--primary-azure);
+}
+
+/* Ensure the wrapper is relative so the list stays attached to the input */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Readonly Fields styling */
+.readonly-field {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    color: #6c757d;
+}
+
+/* Services Selection Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.service-chip {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: #f0f2f5;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.service-chip input {
+    margin-right: 8px;
+}
+
+.service-chip:has(input:checked) {
+    background: var(--main-color);
+    /* Your theme color */
+    color: white;
+}
+
+.upload-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #3498db;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Multi-chip container styling */
+.chip-container.multi-chip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* --- Shared Animation --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* members page styling */
+.members-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* mobile first */
+    gap: 16px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px;
+}
+
+
+/* ===============================
+   CARD (SHORTER HEIGHT)
+================================ */
+.nest-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid #e6eaf0;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+    text-align: left;
+    height: 440px;
+    /* REDUCED HEIGHT */
+    padding: 14px;
+
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+    overflow: hidden;
+}
+
+.nest-card:hover {
+    transform: translateY(-3px);
+}
+
+/* .nest-card * {
+    text-align: left !important;
+} */
+
+/* ===============================
+   HEADER
+================================ */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.avatar-box img {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.name-info h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.location-text {
+    margin-top: 2px;
+    font-size: 0.75rem;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* ===============================
+   STATS — SINGLE LINE, CLEAN
+================================ */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+
+    border-top: 1px solid #edf0f5;
+    border-bottom: 1px solid #edf0f5;
+    padding: 8px 0;
+    margin-bottom: 12px;
+}
+
+.stat-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 0 10px;
+    border-right: 1px solid #edf0f5;
+}
+
+.stat-col:last-child {
+    border-right: none;
+}
+
+/* Label (small, calm) */
+.stat-col .label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #9aa0a6;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+/* Value (clear but not loud) */
+.stat-col .value {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.25;
+}
+
+/* ===============================
+   BIO (FIXED SPACE)
+================================ */
+.tagline-box {
+    min-height: 52px;
+    margin-bottom: 10px;
+}
+.email-text:hover {
+    color: #0d6efd; /* Or your primary theme color */
+    opacity: 0.8;
+}
+
+.tagline-box p {
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.4;
+
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ===============================
+   SKILLS (FIXED SPACE)
+================================ */
+.skills-box {
+    min-height: 60px;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #1f2937;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.skill-chip {
+    background: var(--light-azure);
+    color: var(--primary-azure);
+    padding: 3px 7px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    border: 1px solid #d6e9ff;
+}
+
+.no-data {
+    font-size: 0.72rem;
+    color: #9aa0a6;
+}
+
+/* ===============================
+   CONTACT (FIXED SPACE)
+================================ */
+.contact-box {
+    min-height: 38px;
+    margin-bottom: 8px;
+}
+
+.email-text {
+    font-size: 0.78rem;
+    color: #444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===============================
+   BUTTONS (BOTTOM, SAME COLOR)
+================================ */
+.card-buttons {
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid #edf0f5;
+    padding-top: 10px;
+}
+
+.btn-azure {
+    flex: 1;
+    text-align: center;
+    padding: 9px 0;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--white);
+    background: var(--primary-azure);
+    transition: background 0.2s ease;
+}
+
+.btn-azure:hover {
+    background: var(--dark-azure);
+}
+
+.btn-ln,
+.btn-pt {
+    background: var(--primary-azure);
+}
+
+@media (min-width: 640px) {
+    .members-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .members-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* --- Unique Business Directory Styles --- */
+
+.biz-container {
+    padding: 40px 20px;
+    background-color: #f4f7fa;
+    min-height: 80vh;
+}
+
+.biz-list-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.biz-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Landscape Card Structure for companies */
+.biz-card-landscape {
+    display: grid;
+    grid-template-columns: 220px 1fr 180px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e1e8ef;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.biz-card-landscape:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 127, 255, 0.12);
+    border-color: #007fff;
+}
+
+/* Sidebar Column 1 */
+.biz-side-header {
+    padding: 25px;
+    background-color: #fbfcfe;
+    border-right: 1px solid #edf2f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.biz-logo-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    background: white;
+}
+
+.biz-name {
+    font-size: 1.15rem;
+    color: #1a202c;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.biz-loc-tag {
+    font-size: 0.85rem;
+    color: #718096;
+}
+/* email styling  */
+/* Container for contact items */
+.biz-contact-info {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px;
+     border-top: 1px solid #eee; /* Light separator */
+}
+
+/* Individual contact row */
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0.8rem;
+}
+
+/* The Envelope Icon */
+.contact-icon {
+    color: #0d6efd; /* TechNest Blue */
+    font-size: 1.1rem;
+    width: 20px; /* Keeps icons aligned if you add more later */
+    text-align: center;
+}
+
+/* The Email Link */
+.contact-link {
+    color: #444;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: #0d6efd;
+    text-decoration: underline;
+}
+/* Content Column 2 */
+.biz-content-area {
+    padding: 25px 30px;
+}
+
+.biz-metrics {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.biz-metric-pill {
+    background: #ebf5ff;
+    color: #007fff;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.biz-section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #a0aec0;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.biz-about-para {
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.biz-tags-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.biz-service-badge {
+    background: #f7fafc;
+    border: 1px solid #edf2f7;
+    color: #2d3748;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Sidebar Column 3 */
+.biz-action-sidebar {
+    padding: 25px;
+    background-color: #fbfcfe;
+    border-left: 1px solid #edf2f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.biz-leader-info {
+    text-align: center;
+}
+
+.biz-label {
+    display: block;
+    font-size: 0.65rem;
+    color: #cbd5e0;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.biz-owner-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.biz-social-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.biz-link {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #4a5568;
+    transition: all 0.2s ease;
+}
+
+.biz-link:hover {
+    background: #007fff;
+    color: white;
+    border-color: #007fff;
+    transform: translateY(-2px);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .biz-card-landscape {
+        grid-template-columns: 1fr;
+    }
+
+    .biz-side-header,
+    .biz-action-sidebar {
+        border: none;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .biz-side-header {
+        padding-bottom: 10px;
+    }
+
+    .biz-logo-img {
+        margin-bottom: 0;
+        width: 60px;
+        height: 60px;
+    }
+
+    .biz-social-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+/* load more button style  */
+.biz-load-more-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.biz-btn-load {
+    background-color: #007fff;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.biz-btn-load:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* The Loading State */
+.biz-btn-load.is-loading {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Spinner Animation */
+.biz-spinner {
+    display: none; /* Hidden by default */
+    animation: biz-spin 1s linear infinite;
+}
+
+.biz-btn-load.is-loading .biz-spinner {
+    display: inline-block;
+}
+
+@keyframes biz-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* job page styling */
+/* Job Card Container */
+.azure-landscape-card {
+    display: flex;
+    background: var(--white);
+    border-radius: var(--card-radius);
+    margin-bottom: 25px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition: var(--transition-standard);
+}
+
+.azure-landscape-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-azure);
+}
+
+/* 1. Brand Section (Left) */
+.card-brand-section {
+    padding: 30px;
+    background: var(--light-azure);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    border-right: 1px solid var(--border-light);
+    text-align: center;
+}
+
+.brand-logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    background: var(--white);
+    padding: 5px;
+    border: 1px solid var(--border-light);
+}
+
+.brand-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy-azure);
+    margin: 0;
+}
+
+.brand-location {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* 2. Content Section (Middle) */
+.card-content-section {
+    flex: 1;
+    padding: 25px 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--primary-azure);
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.role-title {
+    font-size: 1.4rem;
+    color: var(--text-main);
+    margin: 0;
+    font-weight: 700;
+}
+
+/* Metrics / Pills */
+.meta-metrics {
+    display: flex;
+    gap: 12px;
+}
+
+.metric-pill {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: var(--text-main);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.metric-pill i {
+    color: var(--primary-azure);
+}
+
+/* Description & Skills */
+.description-text {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.tags-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-badge {
+    background: var(--navy-azure);
+    color: var(--white);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* 3. Action Sidebar (Right) */
+.card-action-section {
+    padding: 30px 25px;
+    background: var(--white);
+    border-left: 1px dashed var(--border-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 190px;
+    text-align: center;
+}
+
+.hiring-status {
+    color: #28a745;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.azure-apply-btn {
+    background: var(--primary-azure);
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    display: block;
+    font-weight: 700;
+    transition: var(--transition-fast);
+}
+
+.azure-apply-btn:hover {
+    background: var(--dark-azure);
+}
+
+.posted-date {
+    display: block;
+    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+/* Responsive: Vertical on Mobile */
+@media (max-width: 992px) {
+    .azure-landscape-card {
+        flex-direction: column;
+    }
+
+    .card-brand-section {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        flex-direction: row;
+        text-align: left;
+        justify-content: flex-start;
+        padding: 20px;
+    }
+
+    .brand-logo {
+        margin-bottom: 0;
+        margin-right: 15px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .card-action-section {
+        border-left: none;
+        border-top: 1px dashed var(--border-light);
+        flex-direction: row;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .status-wrap {
+        text-align: left;
+    }
+}

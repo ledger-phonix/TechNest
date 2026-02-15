@@ -1,0 +1,57 @@
+{% extends "main/base.html" %}
+
+{% block title %}Jobs {% endblock %}
+
+{% block content %}
+<div class="biz-container">
+    {% if jobs %}
+    <div class="biz-list-wrapper">
+        <div class="biz-grid" id="jobs-grid-container">
+            {% include 'partials/_job_card.html' %}
+        </div>
+        {# Load more button following your existing pattern #}
+        <div class="biz-load-more-wrapper">
+            <button id="load-more-jobs-btn" class="biz-btn-load" data-offset="20" data-total="{{ total_count }}">
+
+                <i class="fas fa-spinner biz-spinner"></i>
+                <span class="btn-text">Load More Jobs</span>
+            </button>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="empty-state">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWl4bHZ0MTJucTRxbDc1aDBsZ3o0YWRjeHVsdzc3ZDZweGRhc3VhMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/um2kBnfo55iW4ZH1Fa/giphy.gif"
+            alt="Search Jobs" class="placeholder-gif">
+        <h2>Hatching Soon!</h2>
+        <p>The <strong>Job Board</strong> is currently empty. We're gathering the best opportunities for you!</p>
+        <a href="{{ url_for('home') }}" class="btn-main">Back to Home</a>
+    </div>
+    {% endif %}
+</div>
+<style>
+    .placeholder-gif {
+        max-width: 300px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .empty-state h2 {
+        color: #1a2a6c;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        color: #666;
+        margin-bottom: 30px;
+    }
+</style>
+
+{% endblock %}

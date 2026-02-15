@@ -1,0 +1,62 @@
+{% for company in companies %}
+<div class="biz-card-landscape">
+    <div class="biz-side-header">
+        <img src="{{ company.company_logo }}"
+            alt="{{ company.company_name }}" class="biz-logo-img">
+        <div class="biz-main-info">
+            <h3 class="biz-name">{{ company.company_name|title }}</h3>
+            <p class="biz-loc-tag"><i class="fas fa-map-marker-alt"></i> {{ company.city|title }}</p>
+        </div>
+    </div>
+    <div class="biz-content-area">
+        <div class="biz-metrics">
+            <span class="biz-metric-pill"><i class="far fa-clock"></i> Est. {{ company.established_year }}</span>
+            <span class="biz-metric-pill"><i class="fas fa-users"></i> {{ company.employee_range }} Emp.</span>
+        </div>
+        <div class="biz-description">
+            <h5 class="biz-section-title">About Company</h5>
+            <p class="biz-about-para">{{ company.about }}</p>
+        </div>
+        <div class="biz-contact-info">
+            <h5 class="biz-section-title">Company Email</h5>
+            {% if company.email %}
+            <div class="contact-item">
+                <i class="fa fa-envelope contact-icon"></i>
+                <a href="mailto:{{ company.email }}" class="contact-link">{{ company.email }}</a>
+            </div>
+            {% endif %}
+            <div class="biz-description">
+                <h5 class="biz-section-title">Company Address</h5>
+                <p class="biz-about-para">{{ company.address }}</p>
+            </div>
+            {# You can add phone or website here later #}
+        </div>
+        <div class="biz-services-box">
+            <h5 class="biz-section-title">Services Offered</h5>
+            <div class="biz-tags-flex">
+                {% for service in company.services %}
+                <span class="biz-service-badge">{{ service|title }}</span>
+                {% else %}
+                <span class="biz-no-data">No specific services listed.</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="biz-action-sidebar">
+        <div class="biz-leader-info">
+            <small class="biz-label">Chief Executive</small>
+            <p class="biz-owner-name">{{ company.owner_name|title }}</p>
+        </div>
+        <div class="biz-social-grid">
+            {% if company.web_url %}<a href="{{ company.web_url }}" class="biz-link" target="_blank"><i
+                    class="fas fa-globe"></i></a>{% endif %}
+            {% if company.linkedin_url %}<a href="{{ company.linkedin_url }}" class="biz-link" target="_blank"><i
+                    class="fab fa-linkedin"></i></a>{% endif %}
+            {% if company.google_map_url %}<a href="{{ company.google_map_url }}" class="biz-link" target="_blank"><i
+                    class="fas fa-map-marked-alt"></i></a>{% endif %}
+            {% if company.contact_no %}<a href="tel:{{ company.contact_no }}" class="biz-link"><i
+                    class="fas fa-phone-alt"></i></a>{% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}

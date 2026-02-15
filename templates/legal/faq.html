@@ -1,0 +1,98 @@
+{% extends "main/base.html" %}
+
+{% block title %}FAQ - Frequently Asked Questions{% endblock %}
+
+{% block content %}
+<main id="faq-page">
+    <section class="faq-hero">
+        <h1 class="reveal">Frequently Asked Questions</h1>
+        <p class="reveal">Everything you need to know about the TechNest community and how we connect talent with
+            opportunity.</p>
+    </section>
+
+    <section class="faq-container">
+        <div class="faq-group reveal">
+            <h2 class="faq-category-title">General</h2>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    What exactly is TechNest?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>TechNest is a community-based platform specifically designed to bridge the gap between IT
+                        students, tech professionals, and local companies in Multan. We help students find
+                        internships and companies find the right talent through a match-driven system.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is there a fee to join the community?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>No, TechNest is free for students and individuals looking to grow their careers and connect
+                        with the local tech ecosystem.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-group reveal">
+            <h2 class="faq-category-title">Matching & Opportunities</h2>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How does the "Skill-Based Matching" work?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Our system uses a predefined catalog of professions and skills. When your profile skills
+                        match the requirements of a company's job or internship posting, you'll appear in their
+                        discovery feed, making it easier for them to reach out to you.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can companies in Multan post jobs directly?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Registered companies have a dedicated dashboard where they can post internships and job
+                        openings, track applications, and discover local talent based on specific technical needs.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-group reveal">
+            <h2 class="faq-category-title">Communication & Security</h2>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How does the real-time chat work?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>To ensure privacy and meaningful connections, chat rooms are created only when both the
+                        individual and the company are online and a match has been established. For security, these
+                        temporary chat rooms are deleted once the session is closed.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is my personal information secure?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely. We use secure authentication and role-based access control. Your data is stored
+                        in a secure MySQL database, and we only share relevant profile details with matched
+                        companies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

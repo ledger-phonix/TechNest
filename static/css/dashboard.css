@@ -1,0 +1,405 @@
+/* --- 1. LAYOUT VARIABLES --- */
+:root {
+    --sidebar-width: 250px;
+    --header-height: 60px;
+    --footer-height: 70px;
+    --tech-blue: #0d6efd;
+    --bg-light: #f8f9fa;
+    --transition-speed: 0.3s;
+}
+
+/* --- 2. CORE STYLES --- */
+body.dashboard-body {
+    background-color: var(--bg-light);
+    min-height: 100vh;
+    overflow-x: hidden; /* FIX: Prevents horizontal scroll */
+}
+/* 1. Header should grow with content, not hide it */
+.dashboard-header {
+    height: auto; 
+    min-height: 70px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center; /* This centers the logo vertically without pixel distortion */
+    z-index: 2000 !important;
+    position: sticky;
+    top: 0;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* 2. Remove absolute positioning to stop the 'pixel spreading' */
+.main-logo {
+    position: relative !important; /* Changed from absolute */
+    top: 0 !important;            /* Reset the -25px shift */
+    left: 0 !important;
+    height: 45px;                  /* Moderate height for sharpness */
+    width: auto;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast; /* Enhances sharpness on mobile */
+    image-rendering: crisp-edges;
+}
+
+/* 3. Mobile Specific Adjustments */
+@media (max-width: 768px) {
+    .main-logo {
+        height: 40px; /* Small and sharp for mobile */
+    }
+    .dashboard-header {
+        min-height: 60px;
+    }
+}
+/* --- 3. SIDEBAR (STAYS SAME) --- */
+.sidebar {
+    position: fixed;
+    top: var(--header-height);
+    bottom: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    z-index: 1000;
+    overflow-y: auto;
+    background-color: #fff;
+    transition: transform var(--transition-speed) ease-in-out;
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #444;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.sidebar .nav-link i { font-size: 1.2rem; }
+.sidebar .nav-link:hover { color: var(--tech-blue); background-color: #f1f4f9; }
+.sidebar .nav-link.active { color: var(--tech-blue); background-color: #eef4ff; }
+
+.sidebar .nav-link.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 4px;
+    background-color: var(--tech-blue);
+    border-radius: 0 4px 4px 0;
+}
+
+/* --- 4. GLOBAL FOOTER NAVIGATION --- */
+.dashboard-footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: var(--footer-height);
+    background-color: #fff !important;
+    border-top: 1px solid #dee2e6;
+    display: flex !important;
+    align-items: center;
+    z-index: 1030;
+    transition: all var(--transition-speed) ease-in-out;
+}
+
+.nav-item-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    color: #6c757d;
+    position: relative; 
+    height: 100%;
+    transition: all 0.2s;
+}
+
+.nav-item-bottom i { font-size: 1.3rem; line-height: 1; }
+.nav-item-bottom span { font-size: 0.75rem; margin-top: 2px; font-weight: 500; }
+
+.nav-item-bottom.active {
+    color: var(--tech-blue);
+    background-color: #f8faff;
+    font-weight: 600;
+}
+
+.nav-item-bottom.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--tech-blue);
+}
+
+/* --- 5. DESKTOP LOGIC (Laptops 992px and up) --- */
+@media (min-width: 992px) {
+    .main-view, .dashboard-main-content {
+        margin-left: var(--sidebar-width) !important;
+        padding-bottom: 100px !important;
+        width: calc(100% - var(--sidebar-width)); /* FIX: Prevents overflow */
+    }
+
+    .dashboard-footer {
+        left: var(--sidebar-width) !important;
+        width: calc(100% - var(--sidebar-width)) !important;
+        justify-content: center !important;
+        gap: 60px;
+    }
+
+    .nav-item-bottom { min-width: 100px; padding: 0 15px; }
+    .nav-item-bottom:hover { background-color: #f1f4f9; color: var(--tech-blue); }
+
+    .nav-item-bottom.active::after {
+        bottom: 0;
+        border-radius: 2px 2px 0 0;
+    }
+}
+
+/* --- 6. MOBILE & TABLET LOGIC (Below 992px - Includes iPad Mini 768px) --- */
+@media (max-width: 991.98px) {
+    .main-view, .dashboard-main-content {
+        margin-left: 0 !important;
+        padding-bottom: 90px !important;
+        width: 100%;
+    }
+
+    .dashboard-footer {
+        left: 0 !important;
+        width: 100% !important;
+        justify-content: space-around;
+        gap: 0;
+    }
+
+    .sidebar {
+        position: fixed !important;
+        /* Start exactly below the header */
+        top: var(--header-height) !important; 
+        /* Height is Total Screen minus Header Height */
+        height: calc(100vh - var(--header-height)) !important;
+        
+        z-index: 1050 !important; /* Higher than chat, but allows header to stay visible */
+        background-color: white !important;
+        width: 280px;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        
+        /* Ensure it's hidden by default on mobile unless 'show' class is present */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* When Bootstrap adds the .show class, slide it in */
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .nav-item-bottom { flex: 1; }
+    .nav-item-bottom.active::after {
+        top: 0;
+        border-radius: 0 0 2px 2px;
+    }
+}
+/* --- FULL SCREEN CHAT UX --- */
+
+/* Lock the viewport */
+.chat-app-wrapper {
+    position: fixed;
+    top: var(--header-height);
+    left: var(--sidebar-width);
+    right: 0;
+    bottom: var(--footer-height); /* This stops it from covering your bottom nav */
+    display: flex;
+    flex-direction: column;
+    background: #f4f7f6;
+    z-index: 500; /* Low z-index so sidebar (2000) and header (1060) stay on top */
+}
+
+/* Mobile Adjustment (No Sidebar) */
+@media (max-width: 992px) {
+    .chat-app-wrapper {
+        left: 0;
+        top: var(--header-height);
+        bottom: var(--footer-height);
+    }
+}
+
+/* 1. Header Bar */
+.chat-header-bar {
+    background: #ffffff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.back-btn {
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+}
+
+.badge-role {
+    font-size: 0.7rem;
+    background: #e3f2fd;
+    color: #0d47a1;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* 2. Message Area (The only part that scrolls) */
+.chat-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    scroll-behavior: smooth;
+}
+
+/* 3. Bubbles */
+.msg-row { display: flex; width: 100%; }
+.row-left { justify-content: flex-start; }
+.row-right { justify-content: flex-end; }
+
+.msg-bubble {
+    max-width: 75%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.bubble-blue { background: #007bff; color: white; border-bottom-left-radius: 2px; }
+.bubble-gold { background: #ffc107; color: #333; border-bottom-right-radius: 2px; }
+
+.msg-author { font-size: 0.75rem; font-weight: bold; display: block; margin-bottom: 2px; }
+.msg-time { font-size: 0.65rem; opacity: 0.8; text-align: right; margin-top: 5px; }
+
+/* 4. Input Bar (Sticky at bottom) */
+.chat-input-bar {
+    background: white;
+    padding: 15px 20px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: auto; /* Pushes it to the bottom of the flexbox */
+    width: 100%;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    background: #f0f2f5;
+    border-radius: 25px;
+    padding: 5px 15px;
+    gap: 10px;
+}
+
+.input-container input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 8px 0;
+    outline: none;
+}
+
+.send-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.send-btn:hover { transform: scale(1.1); }
+
+/* --- Desktop Positioning Fix (992px and up) --- */
+@media (min-width: 993px) {
+    .chat-app-wrapper {
+        position: fixed;
+        top: 70px;  /* Height of your Top Nav */
+        left: 260px; /* Width of your Sidebar */
+        right: 0;
+        /* CHANGE THIS: If your desktop has a bottom nav/footer, 
+           increase this value (e.g., 70px or 80px) until the input appears */
+        bottom: 75px; 
+        
+        display: flex;
+        flex-direction: column;
+        z-index: 1050; /* Higher than sidebars and footers */
+        background: #f4f7f6;
+    }
+}
+
+
+/* Emoji Picker Styling */
+.emoji-picker-panel {
+    position: absolute;
+    bottom: 80px;
+    left: 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    z-index: 2000;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 280px;
+}
+
+.emoji {
+    cursor: pointer;
+    font-size: 1.4rem;
+    padding: 5px;
+    transition: transform 0.1s;
+    text-align: center;
+}
+
+.emoji:hover {
+    transform: scale(1.2);
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+/* Ensure the input bar is relative so the picker positions correctly */
+.chat-input-bar {
+    position: relative;
+}
+#emoji-btn {
+    border: none;
+    background: transparent;
+    color: #6c757d !important; /* Dark grey */
+    display: flex;
+    align-items: center;
+}
+
+#emoji-btn:hover {
+    color: #007bff !important; /* Blue on hover */
+}
+
+/* Ensure the input container allows items to stay in a row */
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.msg-author-link {
+    text-decoration: none;
+    color: inherit;
+}
+.msg-author-link:hover .msg-author {
+    text-decoration: underline;
+    color: var(--tech-blue);
+}

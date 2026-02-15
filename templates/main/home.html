@@ -1,0 +1,81 @@
+{% extends "main/base.html" %}
+
+{% block title %}Home - Where Big Ideas Hatch{% endblock %}
+
+{% block content %}
+<section id="hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to TechNest</h1>
+            <h2 class="hero-subtitle">
+                A place for being
+                <span class="typed-text"></span><span class="cursor">&nbsp;</span>
+            </h2>
+            <p class="hero-description">
+                Join a community of absolute beginners and pros. Start your tech journey with the right support.
+            </p>
+            <div class="hero-btns">
+                <a href="{{ url_for('signup') }}" class="btn-main">Join the Nest</a>
+                <a href="{{ url_for('about') }}" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="mission" class="feature-section">
+    <div class="section-container reveal">
+        <div class="section-content">
+            <h3 class="section-tag">Our Mission</h3>
+            <h2 class="section-title">Empowering Tech Ecosystem</h2>
+            <p class="section-text">
+                Many IT and Computer Science students struggle to find local opportunities simply because
+                they don’t know where nearby tech companies are located. Our platform solves this problem by
+                creating a centralized community-based hub where students, professionals, and tech startups can
+                finally connect and grow together.
+            </p>
+        </div>
+    </div>
+</section>
+<section id="ecosystem" class="feature-section">
+    <div class="section-container reveal">
+        <div class="section-content">
+            <h3 class="section-tag">Who We Are</h3>
+            <h2 class="section-title">The Bridge Between Talent and Opportunity</h2>
+            <p class="section-text">
+                We provide a secure, match-driven system designed for the next generation of tech leaders. Students
+                can showcase their skills and discover local internship opportunities, while established
+                professionals and startups can search for suitable candidates to help their organizations thrive.
+            </p>
+        </div>
+    </div>
+</section>
+<section id="matching" class="feature-section">
+    <div class="section-container reveal">
+        <div class="section-content">
+            <h3 class="section-tag">Smart Matching</h3>
+            <h2 class="section-title">Connect Based on What You Actually Do</h2>
+            <p class="section-text">
+                Our system uses a skill-based matching engine to ensure that individuals and companies discover each
+                other based on real technical requirements. Once a match is made, we facilitate smooth collaboration
+                through real-time tools that allow for secure communication and resource sharing.
+            </p>
+        </div>
+    </div>
+</section>
+<section id="why-join" class="feature-section">
+    <div class="section-container reveal">
+        <div class="section-content">
+            <h3 class="section-tag">Get Started</h3>
+            <h2 class="section-title">Why Join the TechNest Community?</h2>
+            <p class="section-text">
+                Beyond just job postings, we are building a space where the local industry connects and
+                collaborates. By joining, you gain access to an interactive dashboard, secure application tracking,
+                and a network of professionals dedicated to closing the gap between local talent and the tech
+                industry.
+            </p>
+            <div class="section-cta">
+                <a href="{{ url_for('signup') }}" class="btn-main">Create Your Account</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

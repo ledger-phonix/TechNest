@@ -1,0 +1,59 @@
+{% extends "main/base.html" %}
+
+{% block title %}Companies{% endblock %}
+
+{% block content %}
+<div class="biz-container"> {% if companies %}
+    <div class="biz-list-wrapper">
+        <div class="biz-grid" id="biz-grid-container">
+            {% include 'partials/_company_card.html' %}
+        </div>
+
+        <div class="biz-load-more-wrapper">
+            <button id="load-more-companies-btn" class="biz-btn-load" data-offset="20" data-total="{{ total_count }}">
+                <i class="fas fa-spinner biz-spinner"></i>
+                <span class="btn-text">Load More Companies</span>
+            </button>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGZ3NXJyeG9seWVucHhxNWsxaGxhNXBmNjNnd2FoZ2w3bm0zam8wNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qgQUggAC3Pfv687qPC/giphy.gif"
+            alt="TechNest Network" class="placeholder-gif">
+        <h2>Hatching Soon!</h2>
+        <p>Our <strong>Companies</strong> network is currently being built. Top tech firms are on their way!</p>
+        <a href="{{ url_for('home') }}" class="btn-main">Back to Home</a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .placeholder-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .placeholder-gif {
+        max-width: 300px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .empty-state h2 {
+        color: #1a2a6c;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        color: #666;
+        margin-bottom: 30px;
+    }
+</style>
+
+{% endblock %}

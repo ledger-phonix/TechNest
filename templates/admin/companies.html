@@ -1,0 +1,92 @@
+{% extends "admin/dashboard.html" %}
+
+{% block page_title %}Company Management{% endblock %}
+
+{% block admin_content %}
+<div class="admin-card">
+    <div class="card-header d-flex-between">
+        <h3>Registered Companies</h3>
+        <span class="badge-count">{{ companies|length }} Total Entities</span>
+    </div>
+    <div class="card-body">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Company Name</th>
+                    <th>Official Email</th>
+                    <th>Staff Size</th>
+                    <th>Jobs</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in companies %}
+                <tr>
+                    <td><code class="member-id-tag">#{{ company.member_id }}</code></td>
+                    <td><strong>{{ company.company_name }}</strong></td>
+                    <td>{{ company.email }}</td>
+                    <td><span class="size-tag">{{ company.employee_range or 'N/A' }}</span></td>
+                    <td>
+                        <span class="job-badge {{ 'active' if company.job_count > 0 else 'empty' }}">
+                            {{ company.job_count }} Active
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn-icon delete" 
+                            onclick="confirmDeleteCompany('{{ company.comp_id }}', '{{ company.company_name }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No companies registered yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Confirm Deletion</h3>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete <strong id="deleteUserName"></strong>?</p>
+            <p class="warning-text">This will permanently remove the company profile, job posts, and authentication data.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+            <a id="confirmDeleteBtn" href="#" class="btn-danger">Delete Permanently</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDeleteCompany(compId, compName) {
+        const modal = document.getElementById('deleteModal');
+        const nameSpan = document.getElementById('deleteUserName');
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+        nameSpan.innerText = compName;
+        // Pointing to the company delete route
+        confirmBtn.href = `/admin/delete-company/${compId}`;
+        modal.style.display = 'flex';
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+        const modal = document.getElementById('deleteModal');
+        if (event.target == modal) {
+            closeDeleteModal();
+        }
+    }
+</script>
+{% endblock %}

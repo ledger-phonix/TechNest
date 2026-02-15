@@ -1,0 +1,69 @@
+{% extends "main/base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<main id="contact-page">
+    <section class="contact-hero">
+        <div class="reveal">
+            <h1>Get in Touch</h1>
+            <p>Have questions about the TechNest community? We're here to help you connect and grow.</p>
+        </div>
+    </section>
+
+    <section class="contact-wrapper">
+        <div class="contact-container reveal">
+            <div class="contact-info">
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email Us</h3>
+                        <p>support@technest.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Location</h3>
+                        <p>Multan, Punjab, Pakistan</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-users"></i>
+                    <div>
+                        <h3>Community</h3>
+                        <p>Join our Discord for real-time help.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-card">
+                <form action="{{ url_for('contact') }}" method="POST" id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="email@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="How can we help?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Write your message here..."
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-main contact-submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

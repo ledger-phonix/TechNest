@@ -1,0 +1,128 @@
+{% extends "dashboard/layout.html" %}
+
+{% block title %}Company Profile - TechNest{% endblock %}
+
+{% block header_title %}Edit Profile{% endblock %}
+
+{% block header_subtitle %}
+<p class="text-muted small mb-0">Update your organization's business and service information.</p>
+{% endblock %}
+
+{% block header_actions %}
+<button type="submit" form="companyProfileForm" class="btn btn-primary px-4 fw-bold shadow-sm">
+    <i class="fas fa-save me-2"></i>Save Changes
+</button>
+{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded shadow-sm p-4 p-md-5">
+    <form action="{{ url_for('dashboard.update_profile_company') }}" method="POST" enctype="multipart/form-data"
+        id="companyProfileForm">
+        <div class="row">
+          
+            <div class="col-lg-3 col-md-4 text-center text-md-start border-end-md pe-md-5 profile-upload-container">
+                <div class="profile-pic-wrapper mb-3 position-relative d-inline-block">
+                    <img src="{{ company.profile_url }}"
+                        id="preview-logo" class="rounded-3 border border-4 border-white shadow-sm" width="150"
+                        height="150" style="object-fit: contain; background: white; border-radius: 15px !important;">
+
+                    <label for="company_logo"
+                        class="btn btn-sm btn-dark position-absolute bottom-0 end-0 rounded-circle p-2 shadow-sm"
+                        style="cursor: pointer;">
+                        <i class="fas fa-camera"></i>
+                        <input type="file" name="company_logo" id="company_logo" hidden accept="image/*">
+                    </label>
+                </div>
+                <div class="mt-2">
+                    <p class="mb-1 fw-bold small text-dark">Company Logo</p>
+                    <p class="text-muted file-hint" id="file-hint-company" style="font-size: 0.75rem;">JPG, PNG or WEBP
+                        (Max 2MB)</p>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-8 ps-md-5">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1">Company Name</label>
+                        <input type="text" name="company_name" class="form-control form-control-lg bg-light border-0"
+                            value="{{ company.company_name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1">CEO / Owner Name</label>
+                        <input type="text" name="owner_name" class="form-control form-control-lg bg-light border-0"
+                            value="{{ company.owner_name }}">
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1">
+                            <i class="fas fa-users me-2 text-primary"></i>Company Size
+                        </label>
+                        <select name="employee_range" class="form-select form-select-lg bg-light border-0">
+                            {% for range in ['1-5','6-10','11-25','26-50','51-100','101-250','251-500','500+'] %}
+                            <option value="{{ range }}" {{ 'selected' if company.employee_range==range }}>{{ range }}
+                                Employees</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1">
+                            <i class="fas fa-globe me-2 text-primary"></i>Website URL
+                        </label>
+                        <input type="url" name="web_url" class="form-control form-control-lg bg-light border-0"
+                            value="{{ company.web_url }}" placeholder="https://">
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-12 search-container">
+                        <label class="form-label fw-bold small text-muted text-uppercase ls-1">
+                            <i class="fas fa-concierge-bell me-2 text-warning"></i> Services Provided (Max 6)
+                        </label>
+                        <div class="search-wrapper">
+                            <input type="text" id="services-input"
+                                class="form-control form-control-lg bg-light border-0"
+                                placeholder="Search services (e.g. SEO, Web Dev)" autocomplete="off">
+                            <div id="services-suggestions" class="suggestions-list"></div>
+                        </div>
+
+                        <input type="hidden" name="service_ids" id="selected-service-ids"
+                            value="{{ current_service_ids }}">
+
+                        <div id="services-chips" class="chip-container mt-2"
+                            data-names="{{ company.services_names_combined }}" data-ids="{{ current_service_ids }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="about" class="fw-bold small text-muted text-uppercase ls-1">
+                        <i class="fas fa-info-circle me-2"></i> About Company
+                    </label>
+                    <textarea name="about" class="form-control bg-light border-0 counted-text" rows="4"
+                        maxlength="200">{{ company.about }}</textarea>
+                    <div class="char-counter text-end small mt-1">
+                        <span class="current">0</span>/200 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const logoInput = document.getElementById('company_logo');
+        const logoPreview = document.getElementById('preview-logo');
+
+        if (logoInput) {
+            logoInput.onchange = evt => {
+                const [file] = logoInput.files;
+                if (file) {
+                    logoPreview.src = URL.createObjectURL(file);
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

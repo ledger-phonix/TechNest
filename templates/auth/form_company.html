@@ -1,0 +1,150 @@
+{% extends "main/base.html" %}
+
+{% block title %}Company Profile - TechNest{% endblock %}
+
+{% block content %}
+<main id="auth-page">
+    <section class="auth-container">
+        <div class="auth-card profile-card">
+            <div class="auth-header">
+                <div style="display: flex; justify-content: center; align-items: center; ">
+                    <img src="{{ url_for('static', filename='images/TechNest_favicon.png') }}" alt="TechNest Logo"
+                        style="max-width: 120px; height: auto; object-fit: contain;">
+                </div>
+                <span class="step-indicator">Step 2 of 2</span>
+                <h2>Company Details</h2>
+                <p>Complete your organization's profile to connect with top talent.</p>
+            </div>
+
+            <form action="{{ url_for('auth.company_form') }}" method="POST" id="company-profile-form"
+                enctype="multipart/form-data">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> Company Name</label>
+                        <input type="text" name="company_name" value="{{ session['temp_user_data']['company_name'] }}"
+                            readonly class="readonly-field">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Business Email</label>
+                        <input type="email" name="email" value="{{ session['temp_user_data']['email'] }}" readonly
+                            class="readonly-field">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="owner_name"><i class="fas fa-user-tie"></i> Owner Name</label>
+                        <input type="text" id="owner_name" name="owner_name" placeholder="Enter owner's name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="established_year"><i class="fas fa-calendar-alt"></i> Established Year</label>
+                        <input type="number" id="established_year" name="established_year" min="1900" max="2026"
+                            placeholder="e.g. 2020" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="employee_range"><i class="fas fa-users"></i> Company Size</label>
+                        <select id="employee_range" name="employee_range" required>
+                            <option value="" disabled selected>Select Range</option>
+                            <option value="1-5">1-5</option>
+                            <option value="6-10">6-10</option>
+                            <option value="11-25">11-25</option>
+                            <option value="26-50">26-50</option>
+                            <option value="51-100">51-100</option>
+                            <option value="101-250">101-250</option>
+                            <option value="500+">500+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="city"><i class="fas fa-map-marker-alt"></i> City</label>
+                        <select id="city" name="city" required>
+                            <option value="" disabled selected>Select City</option>
+                            <option value="Multan">Multan</option>
+                            <option value="DG Khan">DG Khan</option>
+                            <option value="Gujranwala">Gujranwala</option>
+                            <option value="Khanewal">Khanewal</option>
+                            <option value="Vehari">Vehari</option>
+                            <option value="Lodhran">Lodhran</option>
+                            <option value="Muzaffargarh">Muzaffargarh</option>
+                            <option value="Bahawalpur">Bahawalpur</option>
+                            <option value="Kabirwala">Kabirwala</option>
+                            <option value="Mailsi">Mailsi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+
+                <div class="form-group search-container">
+                    <label for="services-input"><i class="fas fa-concierge-bell"></i> Services Provided (Max 6)</label>
+                    <div class="search-wrapper">
+                        <input type="text" id="services-input" placeholder="Search services (e.g. SEO, Web Dev)"
+                            autocomplete="off">
+                        <div id="services-suggestions" class="suggestions-list"></div>
+                    </div>
+                    <input type="hidden" name="service_ids" id="selected-service-ids">
+                    <div id="services-chips" class="chip-container"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address"><i class="fas fa-map-signs"></i> Office Address</label>
+                    <textarea id="address" name="address" rows="2" placeholder="Full office address..."
+                        required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="google_map_url"><i class="fas fa-map"></i> Google Maps Link</label>
+                    <input type="url" id="google_map_url" name="google_map_url"
+                        placeholder="Paste Google Maps Location URL">
+                </div>
+                <div class="form-group">
+                    <label for="about"><i class="fas fa-info-circle"></i> About Company</label>
+                    <textarea id="about" name="about" class="counted-text" rows="4" maxlength="200"
+                        placeholder="Describe your mission and services..." required></textarea>
+                    <div class="char-counter">
+                        <span class="current">0</span>/200 characters
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+
+                <div class="form-group">
+                    <label for="company_logo"><i class="fas fa-camera"></i> Company Logo</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="company_logo" name="company_logo" accept="image/*" required>
+                        <p class="file-hint">JPG, PNG or WEBP only. Max 2MB.</p>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="web_url"><i class="fas fa-globe"></i> Website URL</label>
+                        <input type="url" id="web_url" name="web_url" placeholder="https://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="linkedin_url"><i class="fab fa-linkedin"></i> LinkedIn URL</label>
+                        <input type="url" id="linkedin_url" name="linkedin_url"
+                            placeholder="https://linkedin.com/company/name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact_no"><i class="fas fa-phone"></i> Contact Number</label>
+                    <div class="input-group">
+                        <span class="input-prefix">+92</span>
+                        <input type="tel" id="contact_no" name="contact_no" placeholder="3xxxxxxxxx"
+                            pattern="[3][0-9]{9}" maxlength="10" required>
+                    </div>
+                    <small>Enter 10 digits starting with 3</small>
+                </div>
+
+                <button type="submit" class="btn-main auth-btn">Save Company Profile</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<script src="{{ url_for('static', filename='js/suggestions.js') }}"></script>
+{% endblock %}

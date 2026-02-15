@@ -1,0 +1,70 @@
+{% for member in members %}
+<div class="nest-card">
+    <div class="card-header">
+        <div class="avatar-box">
+            
+            <img src="{{ member.profile_image }}" alt="Profile" class="member-avatar-img">
+        </div>
+        <div class="name-info">
+            <h3>{{ member.display_name|title }}</h3>
+            <p class="location-text">
+                <img src="https://flagcdn.com/w20/pk.png" width="18" alt="PK">
+                {{ member.city|title }}, Pakistan
+            </p>
+        </div>
+    </div>
+    <div class="stats-row">
+        <div class="stat-col">
+            <span class="label">Profession</span>
+            <span class="value">{{ member.profession_name or 'Member' }}</span>
+        </div>
+        <div class="stat-col">
+            <span class="label">Experience</span>
+            <span class="value">{{ member.experience }}</span>
+        </div>
+        <div class="stat-col">
+            <span class="label">Education</span>
+            <span class="value">{{ member.education }}</span>
+        </div>
+        <div class="stat-col">
+            <span class="label">Gender</span>
+            <span class="value">{{ member.gender }}</span>
+        </div>
+    </div>
+
+    <div class="tagline-box">
+        <p>{{ member.tagline or 'No bio provided yet.' }}</p>
+    </div>
+
+    <div class="skills-box">
+        <p class="section-title">Skills</p>
+        <div class="chips">
+            {% if member.skills %}
+            {% for skill in member.skills %}
+            <span class="skill-chip"><i class="fas fa-check"></i> {{ skill }}</span>
+            {% endfor %}
+            {% else %}
+            <span class="no-data">No skills listed</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="contact-box">
+        <p class="section-title">Contact Detail</p>
+        <a href="mailto:{{ member.email }}" class="email-text" style="text-decoration: none; display: block;">
+            <i class="far fa-envelope"></i> {{ member.email }}
+        </a>
+    </div>
+    <div class="card-buttons">
+        <a href="{{ member.linkedin_link if member.linkedin_link else '#' }}"
+            target="{{ '_blank' if member.linkedin_link else '_self' }}" class="btn-azure btn-ln">
+            <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+
+        <a href="{{ member.other_link if member.other_link else '#' }}"
+            target="{{ '_blank' if member.other_link else '_self' }}" class="btn-azure btn-pt">
+            <i class="fas fa-globe"></i> Portfolio
+        </a>
+    </div>
+</div>
+{% endfor %}
