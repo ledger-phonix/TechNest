@@ -47,11 +47,11 @@ We envision a connected tech ecosystem where collaboration happens organically. 
 ## 🚀 Getting Started
 
 1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/ledger-phonix/TechNest.git
+```bash
+git clone https://github.com/ledger-phonix/TechNest.git
 
 ```
-```
+
 2. **Install dependencies:**
 ```bash
 pip install -r requirements.txt
