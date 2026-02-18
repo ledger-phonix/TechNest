@@ -37,7 +37,7 @@ We envision a connected tech ecosystem where collaboration happens organically. 
 | :--- | :--- |
 | **Backend** | Python (Flask) |
 | **Real-time** | Socket.io |
-| **Database** | PostgreSQL (Managed via Aiven) |
+| **Database** | MySQL (Managed via Aiven) |
 | **Cloud Storage** | Cloudinary |
 | **Security** | OTP Verification & Flask-Session management |
 | **UI/UX** | HTML5, CSS3, JavaScript (ES6+) |
@@ -47,8 +47,8 @@ We envision a connected tech ecosystem where collaboration happens organically. 
 ## 🚀 Getting Started
 
 1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/ledger-phonix/TechNest.git](https://github.com/ledger-phonix/TechNest.git)
+```bash
+git clone https://github.com/ledger-phonix/TechNest.git
 
 ```
 
