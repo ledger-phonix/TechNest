@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from mail_service import generate_otp, send_otp_email # Import your utilities
+from mail_service import generate_otp, send_otp_email 
 from db_manager import get_all_members, get_all_companies, get_companies_count, get_members_count, get_detailed_profile_data, get_public_jobs, get_jobs_count
 from flask_mail import Mail, Message
 from members import members_bp
@@ -16,17 +16,16 @@ import threading
 from jobs import jobs_bp
 from admin_routes import admin_bp
 import cloudinary
-# Inside your app setup
+
 
 load_dotenv()
-# Register the blueprints
+
 
 
 app = Flask(__name__)
 
-app.secret_key = os.getenv('FLASK_SECRET_KEY')  # Required for flashing messages later
-# Configuration for Flask-Mail
-# Set maximum content length to 10MB + a bit of buffer for form data
+app.secret_key = os.getenv('FLASK_SECRET_KEY')  
+
 #----------Cloud file uplaoding system-----------------
 # Configuration - This pulls from your CLOUDINARY_URL in .env
 cloudinary.config(
@@ -159,15 +158,15 @@ def privacy():
 def guidelines():
     return render_template('legal/guidelines.html')
 
-app.register_blueprint(dashboard_bp) # Add this line
+app.register_blueprint(dashboard_bp) 
 @app.route('/members')
 def members():
     members_list = []
     total_count = 0
     try:
-        limit = 20 # Remember to set this to 1 for your test!
+        limit = 20 
         members_list = get_all_members(limit=limit, offset=0)
-        # ADD THIS PRINT LINE
+       
        
         total_count = get_members_count()
         # print(f"DEBUG: Members List Count: {len(members_list)} | Total Count: {total_count}")
@@ -313,11 +312,10 @@ def session_expired_handler(e):
     return render_template('legal/session_timeout.html'), 401
 # Run the application
 if __name__ == '__main__':
-    # 1. Start the 'Janitor' thread FIRST
-    # We start this before the server so it's ready to work
+   
     start_cleanup_scheduler(app) 
     DEBUG_MODE = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
-    # 2. Start the SocketIO server
+   
     # socketio.run handles EVERYTHING (both standard routes and chat)
     # We use host='0.0.0.0' to allow network access if needed
     socketio.run(app, host='0.0.0.0', port=5001, debug=DEBUG_MODE)
