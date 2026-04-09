@@ -16,6 +16,8 @@ import threading
 from jobs import jobs_bp
 from admin_routes import admin_bp
 import cloudinary
+import eventlet
+eventlet.monkey_patch()
 
 
 load_dotenv()
