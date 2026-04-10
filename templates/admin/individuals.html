@@ -63,19 +63,36 @@
 </div>
 <script>
     function confirmDelete(userId, userName) {
-        const modal = document.getElementById('deleteModal');
-        const nameSpan = document.getElementById('deleteUserName');
-        const confirmBtn = document.getElementById('confirmDeleteBtn');
+    const modal = document.getElementById('deleteModal');
+    const nameSpan = document.getElementById('deleteUserName');
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
 
-        // Set the name in the popup
-        nameSpan.innerText = userName;
+    // Set the name in the popup
+    nameSpan.innerText = userName;
 
-        // Update the link to point to your delete route
-        confirmBtn.href = `/admin/delete-user/${userId}`;
+    // 1. Remove the href so the browser doesn't try to navigate
+    confirmBtn.removeAttribute('href');
 
-        // Show the modal
-        modal.style.display = 'flex';
-    }
+    // 2. Clone the button to clear any old click events (crucial for modals)
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+    // 3. Handle the click with a dynamic POST form
+    newConfirmBtn.onclick = function(e) {
+        e.preventDefault();
+
+        // Create a hidden form on the fly
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/admin/delete-user/${userId}`;
+
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+    // Show the modal
+    modal.style.display = 'flex';
+}
 
     function closeDeleteModal() {
         document.getElementById('deleteModal').style.display = 'none';

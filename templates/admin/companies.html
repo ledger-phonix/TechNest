@@ -67,16 +67,32 @@
 </div>
 
 <script>
-    function confirmDeleteCompany(compId, compName) {
-        const modal = document.getElementById('deleteModal');
-        const nameSpan = document.getElementById('deleteUserName');
-        const confirmBtn = document.getElementById('confirmDeleteBtn');
+   function confirmDeleteCompany(compId, compName) {
+    const modal = document.getElementById('deleteModal');
+    const nameSpan = document.getElementById('deleteUserName');
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
 
-        nameSpan.innerText = compName;
-        // Pointing to the company delete route
-        confirmBtn.href = `/admin/delete-company/${compId}`;
-        modal.style.display = 'flex';
-    }
+    nameSpan.innerText = compName;
+
+    // Remove any previous event listeners to prevent multiple deletions
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+    // When the user clicks the confirm button in the modal
+    newConfirmBtn.onclick = function(e) {
+        e.preventDefault(); // Stop any default link behavior
+
+        // Create a hidden form on the fly
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/admin/delete-company/${compId}`;
+
+        document.body.appendChild(form);
+        form.submit(); // This sends the POST request
+    };
+
+    modal.style.display = 'flex';
+}
 
     function closeDeleteModal() {
         document.getElementById('deleteModal').style.display = 'none';
