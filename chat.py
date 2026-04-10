@@ -86,7 +86,7 @@ def init_chat_socket(socketio):
         except Exception as e:
             print(f"Database Save Error in Socket: {e}")
             # The decorator will handle the rollback automatically
-
+        pakistan_time = datetime.utcnow() + timedelta(hours=5)
         # BROADCAST: This sends the data back to the JavaScript
         emit('receive_community_msg', {
             'name': display_name,
@@ -96,7 +96,7 @@ def init_chat_socket(socketio):
             'sender_member_id': sender_m_id,
             'file_path': file_path,
             'file_name': file_name,
-            'time': datetime.now().strftime('%I:%M %p')
+            'time': pakistan_time.strftime('%I:%M %p') # Now uses PKT
         }, broadcast=True)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf', 'docx', 'zip', 'txt', 'rar'}
