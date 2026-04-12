@@ -21,7 +21,7 @@
         {% set is_comp = msg.sender_role == 'company' %}
         <div class="msg-row {{ 'row-right' if is_comp else 'row-left' }}">
             <div class="msg-bubble {{ 'bubble-gold' if is_comp else 'bubble-blue' }}">
-                <div class="msg-meta">
+                <!-- <div class="msg-meta">
                     {# Use the is_comp variable here to stay consistent #}
                     <a href="{{ url_for('view_member_profile', role=msg.sender_role, member_id=msg.sender_member_id) }}"
                         class="msg-author-link text-decoration-none d-flex align-items-center" style="color: inherit;">
@@ -40,6 +40,35 @@
                             onerror="this.src='/static/default-logo.png'">
                         {% endif %}
                     </a>
+                </div> -->
+                <div class="msg-meta">
+                    {# FIX: Only render the <a> tag if sender_member_id exists to avoid BuildError #}
+                    {% if msg.sender_member_id %}
+                        <a href="{{ url_for('view_member_profile', role=msg.sender_role, member_id=msg.sender_member_id) }}"
+                            class="msg-author-link text-decoration-none d-flex align-items-center" style="color: inherit;">
+                    {% else %}
+                        <div class="msg-author-link d-flex align-items-center">
+                    {% endif %}
+                
+                            {# Image on the LEFT for individuals #}
+                            {% if not is_comp %}
+                            <img src="{{ msg.avatar }}" class="rounded-circle me-1" width="20" height="20"
+                                onerror="this.src='/static/default-user.png'">
+                            {% endif %}
+                
+                            <span class="msg-author" style="font-weight:bold;">{{ msg.display_name }}</span>
+                
+                            {# Image on the RIGHT for companies #}
+                            {% if is_comp %}
+                            <img src="{{ msg.avatar }}" class="rounded-circle ms-1" width="20" height="20"
+                                onerror="this.src='/static/default-logo.png'">
+                            {% endif %}
+                
+                    {% if msg.sender_member_id %}
+                        </a>
+                    {% else %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 {% if msg.message and msg.message != "None" and msg.message != "" %}
