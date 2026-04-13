@@ -241,7 +241,8 @@ def start_cleanup_scheduler(app):
     def run_loop():
         while True:
             cleanup_old_chats(app)
-            time.sleep(3600) # Wait 1 hour (3600 seconds) before checking again
+            # time.sleep(3600) # Wait 1 hour (3600 seconds) before checking again
+            time.sleep(1800) # reduce half hour
            
             
     thread = threading.Thread(target=run_loop, daemon=True)
