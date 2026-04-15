@@ -20,7 +20,6 @@ from admin_routes import admin_bp
 import cloudinary
 
 
-
 load_dotenv()
 
 
@@ -38,7 +37,7 @@ cloudinary.config(
     secure = True
 )
 app.config['MAX_CONTENT_LENGTH'] = 11 * 1024 * 1024 
-
+app.config['MAIL_DEBUG'] = False
 # Force cookies to be sent over HTTPS only
 app.config['SESSION_COOKIE_SECURE'] = True 
 # Prevent JavaScript from reading the session cookie
