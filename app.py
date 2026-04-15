@@ -1,14 +1,16 @@
 import eventlet
 eventlet.monkey_patch()
 print("Eventlet monkey patch applied.")
+import os
+from dotenv import load_dotenv
+load_dotenv()
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from mail_service import generate_otp, send_otp_email 
 from db_manager import get_all_members, get_all_companies, get_companies_count, get_members_count, get_detailed_profile_data, get_public_jobs, get_jobs_count
 from flask_mail import Mail, Message
 from members import members_bp
 from companies import companies_bp
-import os
-from dotenv import load_dotenv
+
 from flask_socketio import SocketIO
 from chat import chat_bp, init_chat_socket, cleanup_old_chats
 from auth import auth_bp
@@ -51,8 +53,10 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME') 
 # This tells Flask to always use your Gmail as the "From" address
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_TLS'] = False     # Change to False
+app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 
