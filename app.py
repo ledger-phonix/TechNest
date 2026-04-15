@@ -1,5 +1,6 @@
 import eventlet
 eventlet.monkey_patch()
+print("Eventlet monkey patch applied.")
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from mail_service import generate_otp, send_otp_email 
 from db_manager import get_all_members, get_all_companies, get_companies_count, get_members_count, get_detailed_profile_data, get_public_jobs, get_jobs_count
