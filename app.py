@@ -72,6 +72,14 @@ app.register_blueprint(admin_bp)
 # Register the Socket events
 init_chat_socket(socketio)
 mail = Mail(app)
+
+from flask import send_from_directory
+
+@app.route('/sitemap.xml')
+def sitemap():
+   
+    return send_from_directory(app.static_folder, 'sitemap.xml')
+
 # 1. Home Page
 @app.route('/')
 def home():
